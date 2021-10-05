@@ -10,6 +10,7 @@ public class Main {
     final int width = 480;
     final int height = 270;
 
+    // ToDo: Assignment 1
     // This class instance defines the contents of the image.
     ConstantColor content = new ConstantColor(gray);
 
