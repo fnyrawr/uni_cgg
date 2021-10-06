@@ -2,6 +2,9 @@ package cgg;
 
 /**
  * @author Florian Kate
+ * Date 2021-10-06
+ * Student ID: 923081
+ * E-Mail: s51541@bht-berlin.de
  */
 
 import cgtools.*;
