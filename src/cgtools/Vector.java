@@ -62,7 +62,7 @@ public final class Vector {
     return point(a.x - b.x, a.y - b.y, a.z - b.z);
   }
 
-  public static Point interplolate(Point a, Point b, double t) {
+  public static Point interpolate(Point a, Point b, double t) {
     return point(a.x * (1 - t) + b.x * t, a.y * (1 - t) + b.y * t,
         a.z * (1 - t) + b.z * t);
   }
