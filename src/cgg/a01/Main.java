@@ -10,7 +10,7 @@ public class Main {
     final int width = 480;
     final int height = 270;
 
-    // ToDo: Assignment 1
+    // ToDo: a01.disc.png | a01-polka-dots.png
     // This class instance defines the contents of the image.
     ConstantColor content = new ConstantColor(gray);
 
