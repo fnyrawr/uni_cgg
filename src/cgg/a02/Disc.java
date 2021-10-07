@@ -8,20 +8,15 @@ package cgg.a02;
  */
 
 import cgtools.Color;
-import cgtools.Sampler;
 
 // Represents the contents of an image. Provides the same color for all pixels.
 public class Disc {
-    private double width;
-    private double height;
     private double centerX;
     private double centerY;
     private double radius;
     private Color color;
 
-    public Disc(double width, double height, double centerX, double centerY, double radius, Color color) {
-        this.width = width;
-        this.height = height;
+    public Disc(double centerX, double centerY, double radius, Color color) {
         this.radius = radius;
         this.color = color;
         this.centerX = centerX;

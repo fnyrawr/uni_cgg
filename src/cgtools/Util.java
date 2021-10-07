@@ -25,4 +25,5 @@ public final class Util {
     Color diffuse = multiply(0.9 * Math.max(0, dotProduct(lightDir, normal)), color);
     return add(ambient, diffuse);
   }
+
 }

@@ -18,6 +18,6 @@ public class Main {
     final int width = 480;
     final int height = 270;
 
-    RenderA01.RenderA01(width, height, gray, red, blue, yellow, 25, 15);
+    RenderA01.RenderA01(width, height, gray, red, red, yellow, 11, 7);
   }
 }
