@@ -19,7 +19,7 @@ public class Ray {
     /**
      * Constructor for Ray class
      * @param x0 - [Point] origin of ray
-     * @param d - [Vector] direction of ray
+     * @param d - [Direction] direction of ray
      * @param tmin - [double] start of ray
      * @param tmax - [double] end of ray
      */
@@ -41,6 +41,10 @@ public class Ray {
             return true;
         }
         return false;
+    }
+
+    public Point getX0() {
+        return x0;
     }
 
     public Direction getDirection() {

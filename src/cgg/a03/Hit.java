@@ -28,4 +28,12 @@ public class Hit {
         this.n = n;
         this.c = c;
     }
+
+    public Point getHitpoint() {
+        return x;
+    }
+
+    public Direction getUnit() {
+        return n;
+    }
 }
