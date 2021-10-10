@@ -16,7 +16,7 @@ public class RenderA02 {
         Image coloredDiscs = new Image(width, height, 2.2);
         coloredDiscs.sample(new ColoredDiscs(width, height, countDiscs, colorStart, colorEnd), 0);
         Image coloredDiscsSupersampling = new Image(width, height, 2.2);
-        coloredDiscsSupersampling.sample(new ColoredDiscs(width, height, countDiscs, colorStart, colorEnd), 100);
+        coloredDiscsSupersampling.sample(new ColoredDiscs(width, height, countDiscs, colorStart, colorEnd), 16);
 
         // Write the images to disk
         final String filenameDisks = "doc/a02-discs.png";

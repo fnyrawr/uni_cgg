@@ -9,15 +9,12 @@ package cgg.a01;
 
 import static cgtools.Color.*;
 
-import cgg.*;
-import cgtools.Color;
-
 public class Main {
 
   public static void main(String[] args) {
     final int width = 480;
     final int height = 270;
 
-    RenderA01.RenderA01(width, height, gray, red, red, yellow, 11, 7);
+    RenderA01.RenderA01(width, height, gray, red, red, yellow, 16, 9);
   }
 }

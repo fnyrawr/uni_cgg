@@ -17,6 +17,6 @@ public class Main {
         final int width = 480;
         final int height = 270;
 
-        RenderA02.RenderA02(width, height, 50, green, yellow);
+        RenderA02.RenderA02(width, height, 50, red, yellow);
     }
 }

@@ -16,11 +16,11 @@ public class RenderA01 {
     public static void RenderA01(int width, int height, Color constBG, Color discFG, Color pDotStart, Color pDotEnd, int countX, int countY) {
         // Creates images and iterates over all pixel positions inside the images
         Image image = new Image(width, height, 2.2);
-        image.sample(new ConstantColor(constBG), 1);
+        image.sample(new ConstantColor(constBG), 0);
         Image disc = new Image(width, height, 2.2);
-        disc.sample(new Disc(width, height,height/2, discFG), 10);
+        disc.sample(new Disc(width, height,height/2, discFG), 16);
         Image dots = new Image(width, height, 2.2);
-        dots.sample(new Polkadots(width, height,countX,countY, height/(countY+1), pDotStart, pDotEnd), 10);
+        dots.sample(new Polkadots(width, height,countX,countY, height/(countY+2), pDotStart, pDotEnd), 16);
 
         // Write the images to disk
         final String filename = "doc/a01-image.png";
