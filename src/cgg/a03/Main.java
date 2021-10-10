@@ -7,6 +7,7 @@ package cgg.a03;
  * E-Mail: s51541@bht-berlin.de
  */
 
+import cgg.Image;
 import cgtools.*;
 
 public class Main {
@@ -17,13 +18,14 @@ public class Main {
         // DebugOutputs.rayTesting();
         // DebugOutputs.hitpointsTesting();
 
-        // Create image and sample colored discs
-        // Image threeSpheres = new Image(width, height, 2.2);
-        // threeSpheres.sample(new Object(), 0);
+        // Create a new camera and sample spheres
+        CameraObscura camera = new CameraObscura(Math.PI/2, Vector.point(0,0,0), width, height);
+        Image spheres = new Image(width, height, 2.2);
+        spheres.sample(new Spheres(width, height, camera), 16);
 
         // Write the images to disk
-        // final String filename = "doc/a03-three-spheres.png";
-        // threeSpheres.write(filename);
-        // System.out.println("Wrote image: " + filename);
+        final String filename = "doc/a03-three-spheres.png";
+        spheres.write(filename);
+        System.out.println("Wrote image: " + filename);
     }
 }

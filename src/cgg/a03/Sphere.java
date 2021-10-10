@@ -59,4 +59,8 @@ public class Sphere {
         }
         return null;
     }
+
+    public Color getColor() {
+        return color;
+    }
 }

@@ -29,11 +29,19 @@ public class Hit {
         this.c = c;
     }
 
+    public double getDistance() {
+        return t;
+    }
+
     public Point getHitpoint() {
         return x;
     }
 
     public Direction getUnit() {
         return n;
+    }
+
+    public Color getColor() {
+        return c;
     }
 }
