@@ -1,5 +1,12 @@
 package cgg.a04;
 
+/**
+ * @author Florian Kate
+ * Date 2021-10-30
+ * Student ID: 923081
+ * E-Mail: s51541@bht-berlin.de
+ */
+
 import cgg.Image;
 import cgg.cgobjects.*;
 import cgtools.*;
@@ -17,7 +24,7 @@ public class Main {
         CameraObscura camera1 = new CameraObscura(Math.PI/3, Vector.point(0,0,0), width, height);
         Group groupSpheres = new Group();
         groupSpheres.addShape(new Background(Color.gray));
-        groupSpheres.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), Color.lightblue));
+        groupSpheres.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 5, Color.lightblue));
         groupSpheres.addShape(new Sphere(Vector.point(-1.0, -0.25, -2.5), 0.7, Color.blue));
         groupSpheres.addShape(new Sphere(Vector.point(0.0, -0.25, -2.5), 0.5, Color.yellow));
         groupSpheres.addShape(new Sphere(Vector.point(1.0, -0.25, -2.5), 0.7, Color.red));
@@ -26,9 +33,10 @@ public class Main {
         CameraObscura camera2 = new CameraObscura(Math.PI/2, Vector.point(0,0,0), width, height);
         Group groupTotoro = new Group();
         groupTotoro.addShape(new Background(Color.lightblue));
-        groupTotoro.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), Color.darkgreen));
-        groupTotoro.addShape(new Sphere(Vector.point(0.0, -0.25, -2.5), 0.75, Color.gray));
+        groupTotoro.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 3, Color.darkgreen));
+
         // Totoro body
+        groupTotoro.addShape(new Sphere(Vector.point(0.0, -0.25, -2.5), 0.75, Color.gray));
         groupTotoro.addShape(new Sphere(Vector.point(0.0, 0.2, -2.3), 0.65, Color.gray));
         groupTotoro.addShape(new Sphere(Vector.point(0.0, 0.5, -2.1), 0.5, Color.gray));
         groupTotoro.addShape(new Sphere(Vector.point(0.0, -0.25, -2.35), 0.65, Color.white));
@@ -62,11 +70,9 @@ public class Main {
         groupTotoro.addShape(new Sphere(Vector.point(-1.25, -0.5, -3), 1, Color.darkgreen));
         groupTotoro.addShape(new Sphere(Vector.point(-1.5, -0.75, -2.5), 1, Color.darkgreen));
         groupTotoro.addShape(new Sphere(Vector.point(-1.75, -1, -2), 1, Color.darkgreen));
-        groupTotoro.addShape(new Sphere(Vector.point(1.5, -0.75, -2.5), 1, Color.darkgreen));
-        groupTotoro.addShape(new Sphere(Vector.point(1.75, -1, -2), 1, Color.darkgreen));
 
-        spheres.sample(new Raytracer(camera1, groupSpheres), 32);
-        totoro.sample(new Raytracer(camera2, groupTotoro), 32);
+        spheres.sample(new Raytracer(camera1, groupSpheres), 4);
+        totoro.sample(new Raytracer(camera2, groupTotoro), 4);
 
         // Write the images to disk
         final String filename1 = "doc/a04-3-spheres.png";

@@ -1,8 +1,15 @@
 package cgg.cgobjects;
 
+/**
+ * @author Florian Kate
+ * Date 2021-10-30
+ * Student ID: 923081
+ * E-Mail: s51541@bht-berlin.de
+ */
+
 import cgtools.*;
 
-public class Raytracer implements Sampler{
+public class Raytracer implements Sampler {
     public final CameraObscura camera;
     public final Group group;
 

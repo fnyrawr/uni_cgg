@@ -43,12 +43,8 @@ public class Sphere implements Shape {
             double t2 = (-b - Math.sqrt((b*b) - (4*a*c))) / (2*a);
 
             // use smaller t to get first hit
-            if(t1 < t2) {
-                t = t1;
-            }
-            else {
-                t = t2;
-            }
+            t = t1 < t2 ? t1 : t2;
+
             // if tmin <= t <= tmax return hitpoint
             if(r.isValid(t)) {
                 Point x = Vector.add(r.getX0(), Vector.multiply(t, r.getDirection()));
