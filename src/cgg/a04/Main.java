@@ -22,7 +22,7 @@ public class Main {
         image.sample(new Raytracer(camera, group), 32);
 
         // Write the images to disk
-        final String filename = "doc/a04-three-spheres.png";
+        final String filename = "doc/a04-3-spheres.png";
         image.write(filename);
         System.out.println("Wrote image: " + filename);
     }
