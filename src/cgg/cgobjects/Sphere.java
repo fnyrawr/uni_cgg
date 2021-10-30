@@ -10,9 +10,9 @@ package cgg.cgobjects;
 import cgtools.*;
 
 public class Sphere implements Shape {
-    private Point center;
-    private double radius;
-    private Color color;
+    public final Point center;
+    public final double radius;
+    public final Color color;
 
     /**
      * Constructor for Sphere class

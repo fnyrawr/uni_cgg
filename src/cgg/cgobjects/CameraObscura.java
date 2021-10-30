@@ -10,10 +10,10 @@ package cgg.cgobjects;
 import cgtools.*;
 
 public class CameraObscura {
-    private double phi;
-    private Point position;
-    private double width;
-    private double height;
+    public final double phi;
+    public final Point position;
+    public final double width;
+    public final double height;
 
     /**
      * Constructor for CameraObscura class

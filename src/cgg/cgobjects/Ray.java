@@ -13,10 +13,10 @@ import cgtools.Vector;
 
 public class Ray {
     // origin: x0 | direction: d | ray path: tmin tmax
-    private Point x0;
-    private Direction d;
-    private double tmin;
-    private double tmax;
+    public final Point x0;
+    public final Direction d;
+    public final double tmin;
+    public final double tmax;
 
     /**
      * Constructor for Ray class
