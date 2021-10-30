@@ -83,6 +83,7 @@ public final class Color {
   public static final Color white = color(1, 1, 1);
   public static final Color red = color(1, 0, 0);
   public static final Color green = color(0, 1, 0);
+  public static final Color darkgreen = color(0.03, 0.4, 0.05);
   public static final Color blue = color(0, 0, 1);
   public static final Color lightblue = color(0.0235, 0.5373, 0.8157);
   public static final Color yellow = color(1, 1, 0);
