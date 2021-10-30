@@ -8,6 +8,7 @@ package cgg.a03;
  */
 
 import cgg.Image;
+import cgg.cgobjects.*;
 import cgtools.*;
 
 public class Main {

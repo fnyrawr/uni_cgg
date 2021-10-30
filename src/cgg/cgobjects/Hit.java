@@ -1,4 +1,8 @@
-package cgg.a03;
+package cgg.cgobjects;
+
+import cgtools.Color;
+import cgtools.Direction;
+import cgtools.Point;
 
 /**
  * @author Florian Kate
@@ -6,8 +10,6 @@ package cgg.a03;
  * Student ID: 923081
  * E-Mail: s51541@bht-berlin.de
  */
-
-import cgtools.*;
 
 public class Hit {
     private double t;

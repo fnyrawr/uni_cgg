@@ -30,9 +30,9 @@ public class Disc implements Sampler {
     // Returns the color for the given position.
     public Color getColor(double x, double y) {
         // if ((x-centerX)^2 + (y-centerY)^2) <= radius^2, point is on disc
-        if((x-centerX)*(x-centerX) + (y-centerY)*(y-centerY) <= size/2 * size/2)
+        if((x-centerX)*(x-centerX) + (y-centerY)*(y-centerY) <= size/2 * size/2) {
             return color;
-        else
-            return Color.black;
+        }
+        return Color.black;
     }
 }

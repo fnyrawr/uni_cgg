@@ -1,4 +1,4 @@
-package cgg.a03;
+package cgg.cgobjects;
 
 /**
  * @author Florian Kate
@@ -9,7 +9,7 @@ package cgg.a03;
 
 import cgtools.*;
 
-public class Sphere {
+public class Sphere implements Shape {
     private Point center;
     private double radius;
     private Color color;

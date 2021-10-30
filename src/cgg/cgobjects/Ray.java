@@ -1,4 +1,8 @@
-package cgg.a03;
+package cgg.cgobjects;
+
+import cgtools.Direction;
+import cgtools.Point;
+import cgtools.Vector;
 
 /**
  * @author Florian Kate
@@ -6,8 +10,6 @@ package cgg.a03;
  * Student ID: 923081
  * E-Mail: s51541@bht-berlin.de
  */
-
-import cgtools.*;
 
 public class Ray {
     // origin: x0 | direction: d | ray path: tmin tmax

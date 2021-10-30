@@ -1,4 +1,4 @@
-package cgg.a03;
+package cgg.cgobjects;
 
 /**
  * @author Florian Kate

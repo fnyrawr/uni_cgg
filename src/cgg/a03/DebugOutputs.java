@@ -1,5 +1,9 @@
 package cgg.a03;
 
+import cgg.cgobjects.CameraObscura;
+import cgg.cgobjects.Sphere;
+import cgg.cgobjects.Hit;
+import cgg.cgobjects.Ray;
 import cgtools.*;
 
 public class DebugOutputs {

@@ -7,6 +7,10 @@ package cgg.a03;
  * E-Mail: s51541@bht-berlin.de
  */
 
+import cgg.cgobjects.CameraObscura;
+import cgg.cgobjects.Hit;
+import cgg.cgobjects.Ray;
+import cgg.cgobjects.Sphere;
 import cgtools.*;
 
 import java.util.ArrayList;
