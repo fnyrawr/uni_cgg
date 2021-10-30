@@ -38,6 +38,6 @@ public class CameraObscura {
         double dx = x-(width/2);
         double dy = -(y-(height/2));
         double dz = -((width/2) / (Math.tan(phi/2)));
-        return new Ray(position, Vector.direction(dx, dy, dz), 0,50);
+        return new Ray(position, Vector.direction(dx, dy, dz), 0,Double.POSITIVE_INFINITY);
     }
 }

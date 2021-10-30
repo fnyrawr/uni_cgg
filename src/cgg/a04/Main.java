@@ -14,10 +14,10 @@ public class Main {
         CameraObscura camera = new CameraObscura(Math.PI/3, Vector.point(0,0,0), width, height);
         Group group = new Group();
         group.addShape(new Background(Color.gray));
-        group.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), Color.yellow));
-        group.addShape(new Sphere(Vector.point(-1.0, -0.25, -2.5), 0.7, Color.red));
-        group.addShape(new Sphere(Vector.point(0.0, -0.25, -2.5), 0.5, Color.green));
-        group.addShape(new Sphere(Vector.point(1.0, -0.25, -2.5), 0.7, Color.blue));
+        group.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), Color.lightblue));
+        group.addShape(new Sphere(Vector.point(-1.0, -0.25, -2.5), 0.7, Color.blue));
+        group.addShape(new Sphere(Vector.point(0.0, -0.25, -2.5), 0.5, Color.yellow));
+        group.addShape(new Sphere(Vector.point(1.0, -0.25, -2.5), 0.7, Color.red));
 
         image.sample(new Raytracer(camera, group), 32);
 
