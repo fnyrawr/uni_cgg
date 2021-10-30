@@ -58,6 +58,12 @@ public class Main {
         groupTotoro.addShape(new Sphere(Vector.point(-1.6, 1.25, -2), 0.1, Color.white));
         groupTotoro.addShape(new Sphere(Vector.point(-1.5, 1.25, -2), 0.1, Color.white));
         groupTotoro.addShape(new Sphere(Vector.point(-1.4, 1.25, -2), 0.1, Color.white));
+        // bushes
+        groupTotoro.addShape(new Sphere(Vector.point(-1.25, -0.5, -3), 1, Color.darkgreen));
+        groupTotoro.addShape(new Sphere(Vector.point(-1.5, -0.75, -2.5), 1, Color.darkgreen));
+        groupTotoro.addShape(new Sphere(Vector.point(-1.75, -1, -2), 1, Color.darkgreen));
+        groupTotoro.addShape(new Sphere(Vector.point(1.5, -0.75, -2.5), 1, Color.darkgreen));
+        groupTotoro.addShape(new Sphere(Vector.point(1.75, -1, -2), 1, Color.darkgreen));
 
         spheres.sample(new Raytracer(camera1, groupSpheres), 32);
         totoro.sample(new Raytracer(camera2, groupTotoro), 32);
