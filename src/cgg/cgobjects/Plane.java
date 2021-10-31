@@ -13,7 +13,7 @@ public class Plane implements Shape {
     public final Point point;
     public final Direction normal;
     public final double radius;
-    public final Color color;
+    public final Material material;
 
     /**
      * Constructor for Plane class
@@ -25,7 +25,7 @@ public class Plane implements Shape {
         this.point = point;
         this.normal = normal;
         this.radius = radius;
-        this.color = color;
+        this.material = new LambertianMaterial(color);
     }
 
     public Hit intersect(Ray r) {
@@ -53,6 +53,6 @@ public class Plane implements Shape {
         // return null if any of the above stated cases occur
         if(dn == 0 || !r.isValid(t) || Vector.length(Vector.subtract(x, point)) > radius) return null;
 
-        return new Hit(t, x, normal, color);
+        return new Hit(t, x, normal, material);
     };
 }

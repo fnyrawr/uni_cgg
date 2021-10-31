@@ -71,8 +71,8 @@ public class Main {
         groupTotoro.addShape(new Sphere(Vector.point(-1.5, -0.75, -2.5), 1, Color.darkgreen));
         groupTotoro.addShape(new Sphere(Vector.point(-1.75, -1, -2), 1, Color.darkgreen));
 
-        spheres.sample(new Raytracer(camera1, groupSpheres), 32);
-        totoro.sample(new Raytracer(camera2, groupTotoro), 32);
+        spheres.sample(new Raytracer(camera1, groupSpheres, 1), 4);
+        totoro.sample(new Raytracer(camera2, groupTotoro, 1), 4);
 
         // Write the images to disk
         final String filename1 = "doc/a04-3-spheres.png";

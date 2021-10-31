@@ -11,14 +11,16 @@ import cgtools.*;
 
 public class Background implements Shape {
     public final Color color;
+    public final Material material;
 
     public Background(Color color) {
         this.color = color;
+        this.material = new BackgroundMaterial(color);
     }
 
     public Hit intersect(Ray r) {
         Point x = Vector.point(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
         Direction normal = Vector.negate(r.getDirection());
-        return new Hit(Double.POSITIVE_INFINITY, x, normal, color);
+        return new Hit(Double.POSITIVE_INFINITY, x, normal, material);
     };
 }

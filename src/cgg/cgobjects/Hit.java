@@ -1,8 +1,6 @@
 package cgg.cgobjects;
 
-import cgtools.Color;
-import cgtools.Direction;
-import cgtools.Point;
+import cgtools.*;
 
 /**
  * @author Florian Kate
@@ -12,23 +10,23 @@ import cgtools.Point;
  */
 
 public class Hit {
-    private double t;
-    private Point x;
-    private Direction n;
-    private Color c;
+    public final double t;
+    public final Point x;
+    public final Direction n;
+    public final Material m;
 
     /**
      * Constructor for Hit class
      * @param t - [double] ray parameter
      * @param x - [Point] hitpoint
      * @param n - [Direction] unit (normal) vector
-     * @param c - [Color] color of the hit surface
+     * @param m - [Material] material of the hit surface
      */
-    public Hit(double t, Point x, Direction n, Color c) {
+    public Hit(double t, Point x, Direction n, Material m) {
         this.t = t;
         this.x = x;
         this.n = n;
-        this.c = c;
+        this.m = m;
     }
 
     public double getDistance() {
@@ -43,7 +41,7 @@ public class Hit {
         return n;
     }
 
-    public Color getColor() {
-        return c;
+    public Material getMaterial() {
+        return m;
     }
 }

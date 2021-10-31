@@ -12,25 +12,32 @@ import cgtools.*;
 public class Raytracer implements Sampler {
     public final CameraObscura camera;
     public final Group group;
+    public final int recursionDepth;
 
-    public Raytracer(CameraObscura camera, Group group) {
+    public Raytracer(CameraObscura camera, Group group, int recursionDepth) {
         this.camera = camera;
         this.group = group;
+        this.recursionDepth = recursionDepth;
     }
 
     public Color getColor(double x, double y) {
-        Ray r = camera.generateRay(x, y);
-        Hit h = group.intersect(r);
-        if(h == null) {
-            return Color.black;
-        }
-        return shade(h.getUnit(), h.getColor());
+        Ray ray = camera.generateRay(x, y);
+        return calculateRadiance(group, ray, recursionDepth);
     }
 
-    public static Color shade(Direction normal, Color color) {
-        Direction lightDir = Vector.normalize(Vector.direction(1, 1, 0.5));
-        Color ambient = Color.multiply(0.1, color);
-        Color diffuse = Color.multiply(0.9 * Math.max(0, Vector.dotProduct(lightDir, normal)), color);
-        return Color.add(ambient, diffuse);
+    public Color calculateRadiance(Shape scene, Ray ray, int depth) {
+        // check for maximum recursion depth
+        if(depth == 0) return Color.black;
+        // intersect ray with scene
+        Hit hit = scene.intersect(ray);
+        // query material at hit point
+        Material material = hit.getMaterial();
+        if(material.getSecondaryRay() != null) {
+            // combine emmission and reflection
+            Color.add(material.getEmmission(), Color.multiply(material.getAlbedo(ray, hit),
+                    calculateRadiance(scene, material.getSecondaryRay(), depth-1)));
+        }
+        // absorbed, just emmission
+        return material.getEmmission();
     }
 }

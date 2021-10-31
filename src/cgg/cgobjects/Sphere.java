@@ -12,7 +12,7 @@ import cgtools.*;
 public class Sphere implements Shape {
     public final Point center;
     public final double radius;
-    public final Color color;
+    public final Material material;
 
     /**
      * Constructor for Sphere class
@@ -23,7 +23,7 @@ public class Sphere implements Shape {
     public Sphere(Point center, double radius, Color color) {
         this.center = center;
         this.radius = radius;
-        this.color = color;
+        this.material = new LambertianMaterial(color);
     }
 
     public Hit intersect(Ray r) {
@@ -50,13 +50,9 @@ public class Sphere implements Shape {
                 Point x = Vector.add(r.getX0(), Vector.multiply(t, r.getDirection()));
                 // normal vector = (x-center)/radius
                 Direction normal = Vector.negate(Vector.divide(Vector.subtract(center, x), radius));
-                return new Hit(t, x, normal, color);
+                return new Hit(t, x, normal, material);
             }
         }
         return null;
-    }
-
-    public Color getColor() {
-        return color;
     }
 }

@@ -7,10 +7,7 @@ package cgg.a03;
  * E-Mail: s51541@bht-berlin.de
  */
 
-import cgg.cgobjects.CameraObscura;
-import cgg.cgobjects.Hit;
-import cgg.cgobjects.Ray;
-import cgg.cgobjects.Sphere;
+import cgg.cgobjects.*;
 import cgtools.*;
 
 import java.util.ArrayList;
@@ -19,20 +16,44 @@ public class Spheres implements Sampler {
     private double width;
     private double height;
     private CameraObscura camera;
-
-    protected ArrayList<Sphere> spheres;
+    private int recursionDepth = 5;
+    private Group spheres;
 
     public Spheres(double width, double height, CameraObscura camera) {
         this.width = width;
         this.height = height;
         this.camera = camera;
 
-        spheres = new ArrayList<Sphere>();
-        spheres.add(new Sphere(Vector.point(0,0,-15), 7, Color.yellow));
-        spheres.add(new Sphere(Vector.point(-10,-5,-20), 5, Color.red));
-        spheres.add(new Sphere(Vector.point(0.5,0.5,-2), 0.5, Color.green));
+        //spheres = new ArrayList<Sphere>();
+        spheres = new Group();
+        spheres.addShape(new Sphere(Vector.point(0,0,-15), 7, Color.yellow));
+        spheres.addShape(new Sphere(Vector.point(-10,-5,-20), 5, Color.red));
+        spheres.addShape(new Sphere(Vector.point(0.5,0.5,-2), 0.5, Color.green));
     }
 
+    public Color getColor(double x, double y) {
+        Ray ray = camera.generateRay(x, y);
+        return calculateRadiance(spheres, ray, recursionDepth);
+    }
+
+    public Color calculateRadiance(Shape scene, Ray ray, int depth) {
+        // check for maximum recursion depth
+        if(depth == 0) return Color.black;
+        // intersect ray with scene
+        Hit hit = scene.intersect(ray);
+        // query material at hit point
+        Material material = hit.getMaterial();
+        if(material.getSecondaryRay() != null) {
+            // combine emmission and reflection
+            Color.add(material.getEmmission(), Color.multiply(material.getAlbedo(ray, hit),
+                    calculateRadiance(scene, material.getSecondaryRay(), depth-1)));
+        }
+        // absorbed, just emmission
+        return material.getEmmission();
+    }
+
+    /*
+    OLD DEPRECATED METHODS FROM BEFORE A05
     public Color getColor(double x, double y) {
         Ray r = camera.generateRay(x, y);
         Hit nearestHit = null;
@@ -45,7 +66,7 @@ public class Spheres implements Sampler {
             }
         }
         if(nearestHit != null) {
-            return shade(nearestHit.getUnit(), nearestHit.getColor());
+            return shade(nearestHit.getUnit(), nearestHit.getMaterial().);
         }
         return Color.black;
     }
@@ -56,4 +77,5 @@ public class Spheres implements Sampler {
         Color diffuse = Color.multiply(0.9 * Math.max(0, Vector.dotProduct(lightDir, normal)), color);
         return Color.add(ambient, diffuse);
     }
+     */
 }
