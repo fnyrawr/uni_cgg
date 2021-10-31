@@ -80,6 +80,7 @@ public final class Color {
 
   public static final Color black = color(0, 0, 0);
   public static final Color gray = color(0.5, 0.5, 0.5);
+  public static final Color lightgray = color(0.75, 0.75, 0.75);
   public static final Color white = color(1, 1, 1);
   public static final Color red = color(1, 0, 0);
   public static final Color green = color(0, 1, 0);

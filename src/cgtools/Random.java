@@ -46,6 +46,12 @@ public class Random extends java.util.Random {
     return (int) (((z ^ (z >>> 28)) * 0xCB24D0A5C88C35B3L) >>> 32);
   }
 
+  // random function with min and max range specified
+  public static double randomMinMax(double min, double max) {
+    double dx = max - min;
+    return random() * .9999 * dx - dx/2;
+  }
+
   @Override
   public long nextLong() {
     return staffordMix13(x += PHI);

@@ -32,10 +32,11 @@ public class Raytracer implements Sampler {
         Hit hit = scene.intersect(ray);
         // query material at hit point
         Material material = hit.getMaterial();
-        if(material.getSecondaryRay() != null) {
+        Ray secondaryRay = material.getSecondaryRay(ray, hit);
+        if(secondaryRay != null) {
             // combine emmission and reflection
-            Color.add(material.getEmmission(), Color.multiply(material.getAlbedo(ray, hit),
-                    calculateRadiance(scene, material.getSecondaryRay(), depth-1)));
+            Color color = Color.multiply(material.getAlbedo(), calculateRadiance(scene, secondaryRay, depth));
+            return Color.add(material.getEmmission(), color);
         }
         // absorbed, just emmission
         return material.getEmmission();

@@ -23,7 +23,7 @@ public class Sphere implements Shape {
     public Sphere(Point center, double radius, Color color) {
         this.center = center;
         this.radius = radius;
-        this.material = new LambertianMaterial(color);
+        this.material = new DiffuseMaterial(color);
     }
 
     public Hit intersect(Ray r) {

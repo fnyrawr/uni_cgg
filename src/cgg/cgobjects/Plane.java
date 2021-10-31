@@ -25,7 +25,7 @@ public class Plane implements Shape {
         this.point = point;
         this.normal = normal;
         this.radius = radius;
-        this.material = new LambertianMaterial(color);
+        this.material = new DiffuseMaterial(color);
     }
 
     public Hit intersect(Ray r) {
