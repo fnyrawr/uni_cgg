@@ -53,6 +53,10 @@ public class Spheres implements Sampler {
         return material.getEmmission();
     }
 
+    public int getRecursionDepth() {
+        return recursionDepth;
+    }
+
     /*
     OLD DEPRECATED METHODS FROM BEFORE A05
     public Color getColor(double x, double y) {

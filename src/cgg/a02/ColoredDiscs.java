@@ -36,4 +36,8 @@ public class ColoredDiscs implements Sampler {
         }
         return Color.black;
     }
+
+    public int getRecursionDepth() {
+        return 0;
+    }
 }

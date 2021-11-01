@@ -71,15 +71,20 @@ public class Main {
         groupTotoro.addShape(new Sphere(Vector.point(-1.5, -0.75, -2.5), 1, Color.darkgreen));
         groupTotoro.addShape(new Sphere(Vector.point(-1.75, -1, -2), 1, Color.darkgreen));
 
-        spheres.sample(new Raytracer(camera1, groupSpheres, 8), 32);
-        totoro.sample(new Raytracer(camera2, groupTotoro, 8), 32);
+        // sample spheres
+        spheres.sample(new Raytracer(camera1, groupSpheres, 16), 32);
 
-        // Write the images to disk
+        // Write the image to disk
         final String filename1 = "doc/a04-3-spheres.png";
-        final String filename2 = "doc/a04-scene.png";
         spheres.write(filename1);
-        totoro.write(filename2);
         System.out.println("Wrote image: " + filename1);
+
+        // sample totoro
+        totoro.sample(new Raytracer(camera2, groupTotoro, 16), 64);
+
+        // Write the image to disk
+        final String filename2 = "doc/a04-scene.png";
+        totoro.write(filename2);
         System.out.println("Wrote image: " + filename2);
     }
 }

@@ -52,4 +52,8 @@ public class Polkadots implements Sampler {
         else
             return Color.black;
     }
+
+    public int getRecursionDepth() {
+        return 0;
+    }
 }

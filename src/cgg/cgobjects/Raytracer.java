@@ -41,4 +41,8 @@ public class Raytracer implements Sampler {
         // absorbed, just emmission
         return material.getEmmission();
     }
+
+    public int getRecursionDepth() {
+        return recursionDepth;
+    }
 }

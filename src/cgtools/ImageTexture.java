@@ -67,4 +67,8 @@ public class ImageTexture implements Sampler {
     }
     return divide(color, componentScale);
   }
+
+  public int getRecursionDepth() {
+    return 0;
+  }
 }

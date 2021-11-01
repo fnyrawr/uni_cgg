@@ -14,4 +14,9 @@ public class ConstantColor implements Sampler {
   public Color getColor(double x, double y) {
     return color;
   }
+
+  @Override
+  public int getRecursionDepth() {
+    return 0;
+  }
 }

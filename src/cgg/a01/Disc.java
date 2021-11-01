@@ -35,4 +35,8 @@ public class Disc implements Sampler {
         }
         return Color.black;
     }
+
+    public int getRecursionDepth() {
+        return 0;
+    }
 }

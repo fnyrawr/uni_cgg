@@ -13,8 +13,8 @@ import cgtools.*;
 
 public class Main {
     public static void main(String[] args) {
-        final int width = 1024;
-        final int height = 768;
+        final int width = 1920;
+        final int height = 1080;
 
         // Create an image, a new camera and a group for the image
         Image image = new Image(width, height, 2.2);
@@ -24,7 +24,7 @@ public class Main {
         Group group = new Group();
         group.addShape(new Background(Color.white));
         group.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 9, Color.lightgray));
-        for(int i=0; i<100; i++) {
+        for(int i=0; i<200; i++) {
             double rndX = Random.randomMinMax(-2.5, 2.5);
             double rndZ = Random.randomMinMax(-3.0, -9.0);
             double rndSize = Random.randomMinMax(0.05, 0.5);
@@ -35,7 +35,7 @@ public class Main {
             group.addShape(new Sphere(Vector.point(rndX, -0.5+rndSize, rndZ), rndSize, color));
         }
 
-        image.sample(new Raytracer(camera, group, 8), 16);
+        image.sample(new Raytracer(camera, group, 8), 32);
 
         // Write the images to disk
         final String filename = "doc/a05-diffuse-spheres.png";
