@@ -20,22 +20,24 @@ public class Main {
         Image image = new Image(width, height, 2.2);
 
         // a05-diffuse-spheres.png Camera and Group
-        CameraObscura camera = new CameraObscura(Math.PI/2, Vector.point(0,0,0), width, height);
+        CameraObscura camera = new CameraObscura(Math.PI/1.5, Vector.point(0,0,0), width, height);
         Group group = new Group();
         group.addShape(new Background(Color.white));
         group.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 9, Color.lightgray));
-        for(int i=0; i<200; i++) {
-            double rndX = Random.randomMinMax(-2.5, 2.5);
-            double rndZ = Random.randomMinMax(-3.0, -9.0);
-            double rndSize = Random.randomMinMax(0.05, 0.5);
-            double w = Random.random();
+        for(int i=0; i<100; i++) {
+            double rndSize = Random.randomMinMax(0.5, 1.0);
+            double rndDist = Random.randomMinMax(9, 18);
+            double rndPhi = Random.randomMinMax(0, camera.phi);
+            double posX = rndDist*Math.sin(rndPhi);
+            double posZ = -rndDist*Math.cos(rndPhi);
             Color color1 = Color.orange;
             Color color2 = Color.green;
+            double w = Random.random();
             Color color = Color.add(color1, Color.multiply(w, Color.subtract(color2, color1)));
-            group.addShape(new Sphere(Vector.point(rndX, -0.5+rndSize, rndZ), rndSize, color));
+            group.addShape(new Sphere(Vector.point(posX, -0.5+rndSize, posZ), rndSize, color));
         }
 
-        image.sample(new Raytracer(camera, group, 8), 32);
+        image.sample(new Raytracer(camera, group, 16), 64);
 
         // Write the images to disk
         final String filename = "doc/a05-diffuse-spheres.png";

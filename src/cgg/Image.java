@@ -10,7 +10,6 @@ package cgg;
 import cgtools.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.*;
 
 public class Image {
@@ -70,8 +69,8 @@ public class Image {
         // collect calculated results
         int z = 0;
         double pixelsTotal = width*height;
-        System.out.println(String.format("Rendering image with recursionDepth %d and %dx antialiasing settings",
-                s.getRecursionDepth(), n));
+        System.out.println(String.format("Rendering %d x %d image with recursionDepth %d and %dx antialiasing settings",
+                width, height, s.getRecursionDepth(), n));
         for (int x = 0; x != width; x++) {
             for (int y = 0; y != height; y++) {
                 try {
