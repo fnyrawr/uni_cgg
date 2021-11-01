@@ -19,13 +19,13 @@ public class Plane implements Shape {
      * Constructor for Plane class
      * @param point - [Point] anchor point of plane
      * @param normal - [Direction] direction of normal vector
-     * @param color - [Color] color of the sphere's surface
+     * @param material - [Material] material of plane's surface
      */
-    public Plane(Point point, Direction normal, double radius, Color color) {
+    public Plane(Point point, Direction normal, double radius, Material material) {
         this.point = point;
         this.normal = normal;
         this.radius = radius;
-        this.material = new DiffuseMaterial(color);
+        this.material = material;
     }
 
     public Hit intersect(Ray r) {

@@ -18,12 +18,12 @@ public class Sphere implements Shape {
      * Constructor for Sphere class
      * @param center - [Point] center point of sphere
      * @param radius - [double] radius of sphere
-     * @param color - [Color] color of the sphere's surface
+     * @param material - [Material] material of the sphere's surface
      */
-    public Sphere(Point center, double radius, Color color) {
+    public Sphere(Point center, double radius, Material material) {
         this.center = center;
         this.radius = radius;
-        this.material = new DiffuseMaterial(color);
+        this.material = material;
     }
 
     public Hit intersect(Ray r) {

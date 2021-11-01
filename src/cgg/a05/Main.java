@@ -23,7 +23,8 @@ public class Main {
         CameraObscura camera = new CameraObscura(Math.PI/1.5, Vector.point(0,0,0), width, height);
         Group group = new Group();
         group.addShape(new Background(Color.white));
-        group.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 9, Color.lightgray));
+        group.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 9,
+                new DiffuseMaterial(Color.lightgray)));
         for(int i=0; i<100; i++) {
             double rndSize = Random.randomMinMax(0.5, 1.0);
             double rndDist = Random.randomMinMax(9, 18);
@@ -34,7 +35,7 @@ public class Main {
             Color color2 = Color.green;
             double w = Random.random();
             Color color = Color.add(color1, Color.multiply(w, Color.subtract(color2, color1)));
-            group.addShape(new Sphere(Vector.point(posX, -0.5+rndSize, posZ), rndSize, color));
+            group.addShape(new Sphere(Vector.point(posX, -0.5+rndSize, posZ), rndSize, new DiffuseMaterial(color)));
         }
 
         image.sample(new Raytracer(camera, group, 16), 64);

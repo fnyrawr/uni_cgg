@@ -1,9 +1,6 @@
 package cgg.a03;
 
-import cgg.cgobjects.CameraObscura;
-import cgg.cgobjects.Sphere;
-import cgg.cgobjects.Hit;
-import cgg.cgobjects.Ray;
+import cgg.cgobjects.*;
 import cgtools.*;
 
 public class DebugOutputs {
@@ -25,9 +22,9 @@ public class DebugOutputs {
 
     public static void hitpointsTesting() {
         // SPHERE HITPOINTS TESTING (succeeded)
-        Sphere s1 = new Sphere(Vector.point(0, 0, -2), 1, Color.red);
-        Sphere s2 = new Sphere(Vector.point(0, -1, -2), 1, Color.yellow);
-        Sphere s3 = new Sphere(Vector.point(0, 0, -4), 1, Color.blue);
+        Sphere s1 = new Sphere(Vector.point(0, 0, -2), 1, new DiffuseMaterial(Color.red));
+        Sphere s2 = new Sphere(Vector.point(0, -1, -2), 1, new DiffuseMaterial(Color.yellow));
+        Sphere s3 = new Sphere(Vector.point(0, 0, -4), 1, new DiffuseMaterial(Color.blue));
 
         Ray r1 = new Ray(Vector.point(0, 0, 0), Vector.direction(0, 0, -1), 0, 50);
         Ray r2 = new Ray(Vector.point(0, 0, 0), Vector.direction(0, 1, -1), 0, 50);

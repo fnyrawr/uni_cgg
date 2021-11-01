@@ -14,9 +14,9 @@ import static cgtools.Color.*;
 public class Main {
 
     public static void main(String[] args) {
-        final int width = 480;
-        final int height = 270;
+        final int width = 1920;
+        final int height = 1080;
 
-        RenderA02.RenderA02(width, height, 50, red, yellow);
+        RenderA02.RenderA02(width, height, 50, green, yellow);
     }
 }
