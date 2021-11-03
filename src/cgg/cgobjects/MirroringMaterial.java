@@ -36,7 +36,7 @@ public class MirroringMaterial implements Material {
     public Ray getSecondaryRay(Ray ray, Hit hit) {
         // secondaryRay = ray - 2*(hit.normal*ray)*hit.normal
         Direction direction = Vector.subtract(ray.getDirection(),
-                Vector.multiply(Vector.dotProduct(hit.getUnit(), ray.getDirection()), hit.getUnit()));
-        return new Ray(hit.getHitpoint(), Vector.normalize(Vector.add(hit.getUnit(), direction)), 0.0001, ray.tmax);
+                Vector.multiply(Vector.dotProduct(hit.getNormal(), ray.getDirection()), hit.getNormal()));
+        return new Ray(hit.getHitpoint(), Vector.normalize(Vector.add(hit.getNormal(), direction)), 0.0001, ray.tmax);
     }
 }

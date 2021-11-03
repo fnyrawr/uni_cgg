@@ -41,14 +41,14 @@ public class DiffuseMirroringMaterial implements Material {
     public Ray getSecondaryRay(Ray ray, Hit hit) {
         // mirroring direction = ray - 2*(hit.normal*ray)*hit.normal
         Direction direction = Vector.subtract(ray.getDirection(),
-                Vector.multiply(Vector.dotProduct(hit.getUnit(), ray.getDirection()), hit.getUnit()));
+                Vector.multiply(Vector.dotProduct(hit.getNormal(), ray.getDirection()), hit.getNormal()));
         // adding a random scattering direction and normalizing the secondaryRay's direction
         direction = Vector.normalize(Vector.add(direction, getRandomDirection()));
         // edge case test: negate direction if it's angle is > 90° to the normal of hit
-        if(Vector.dotProduct(direction, hit.getUnit()) < 0) {
+        if(Vector.dotProduct(direction, hit.getNormal()) < 0) {
             Vector.negate(direction);
         }
-        return new Ray(hit.getHitpoint(), Vector.normalize(Vector.add(hit.getUnit(), direction)), 0.0001, ray.tmax);
+        return new Ray(hit.getHitpoint(), Vector.normalize(Vector.add(hit.getNormal(), direction)), 0.0001, ray.tmax);
     }
 
     // get random direction <= scatteringFactor

@@ -37,7 +37,7 @@ public class Hit {
         return x;
     }
 
-    public Direction getUnit() {
+    public Direction getNormal() {
         return n;
     }
 

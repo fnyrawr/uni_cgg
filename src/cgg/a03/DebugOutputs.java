@@ -34,13 +34,13 @@ public class DebugOutputs {
         System.out.println("\nDEBUG: sphere hitpoints");
         Hit hp1 = s1.intersect(r1);
         System.out.println("Hitpoint of sphere 1: " + hp1.getHitpoint().toString());
-        System.out.println("Normal vector: " + hp1.getUnit().toString());
+        System.out.println("Normal vector: " + hp1.getNormal().toString());
         if (s1.intersect(r2) == null) {
             System.out.println("no hitpoint for sphere 2");
         }
         Hit hp2 = s2.intersect(r1);
         System.out.println("Hitpoint of sphere 2: " + hp2.getHitpoint().toString());
-        System.out.println("Normal vector: " + hp2.getUnit().toString());
+        System.out.println("Normal vector: " + hp2.getNormal().toString());
         if (s1.intersect(r3) == null) {
             System.out.println("no hitpoint for sphere 4");
         }

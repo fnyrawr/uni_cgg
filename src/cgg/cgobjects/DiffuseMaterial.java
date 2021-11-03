@@ -37,7 +37,7 @@ public class DiffuseMaterial implements Material {
 
     public Ray getSecondaryRay(Ray ray, Hit hit) {
         // Vector.normalize(Vector.add(hit.getUnit(), direction): normalized addition of random direction (<=1) and hit normal
-        return new Ray(hit.getHitpoint(), Vector.normalize(Vector.add(hit.getUnit(), getRandomDirection())), 0.0001, ray.tmax);
+        return new Ray(hit.getHitpoint(), Vector.normalize(Vector.add(hit.getNormal(), getRandomDirection())), 0.0001, ray.tmax);
     }
 
     // get random direction <= 1

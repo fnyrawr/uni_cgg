@@ -38,7 +38,7 @@ public class GlassMaterial implements Material {
     public Ray getSecondaryRay(Ray ray, Hit hit) {
         // calculate scattered ray direction
         Direction d = ray.getDirection();
-        Direction n = hit.getUnit();
+        Direction n = hit.getNormal();
         if(Vector.dotProduct(n, d) > 0) {
             // negate n
             n = Vector.negate(n);
@@ -49,10 +49,10 @@ public class GlassMaterial implements Material {
         }
         Direction r = refract(d, n, n1, n2);
         if(r != null) {
-            if(Random.randomMinMax(0.0,15.0) > schlick(d, n, n1, n2))
-                return new Ray(hit.getHitpoint(), Vector.normalize(r), 0.0001, ray.tmax);
+            if(Random.random() > schlick(d, n, n1, n2))
+                return new Ray(hit.getHitpoint(), r, 0.0001, ray.tmax);
         }
-        return new Ray(hit.getHitpoint(), Vector.normalize(reflect(d, n)), 0.0001, ray.tmax);
+        return new Ray(hit.getHitpoint(), reflect(d, n), 0.0001, ray.tmax);
     }
 
     public Direction reflect(Direction d, Direction n) {
@@ -67,10 +67,10 @@ public class GlassMaterial implements Material {
 
     public Direction refract(Direction d, Direction n, double n1, double n2) {
         double r = n1/n2;
-        double c = Vector.dotProduct(Vector.negate(n), d);
+        double c = Vector.dotProduct(n, d);
         double discriminant = 1-r*r*(1-c*c);
         if(discriminant >= 0) {
-            return Vector.add(Vector.multiply(r, d), Vector.multiply(r*c-Math.sqrt(discriminant), n));
+            return Vector.add(Vector.negate(Vector.multiply(r, d)), Vector.multiply(10*r*c-Math.sqrt(discriminant), n));
         }
         return null;
     }
