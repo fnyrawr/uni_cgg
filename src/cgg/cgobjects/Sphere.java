@@ -26,11 +26,11 @@ public class Sphere implements Shape {
         this.material = material;
     }
 
-    public Hit intersect(Ray r) {
-        Point shiftedX0 = Vector.subtract(r.getX0(), Vector.direction(center.x, center.y, center.z));
+    public Hit intersect(Ray ray) {
+        Point shiftedX0 = Vector.subtract(ray.getX0(), Vector.direction(center.x, center.y, center.z));
         // a = d^2 | b = 2x0*d | c = x0^2 - r^2
-        double a = Vector.dotProduct(r.getDirection(), r.getDirection());
-        double b = 2 * Vector.dotProduct(shiftedX0, r.getDirection());
+        double a = Vector.dotProduct(ray.getDirection(), ray.getDirection());
+        double b = 2 * Vector.dotProduct(shiftedX0, ray.getDirection());
         double c = Vector.dotProduct(shiftedX0, shiftedX0) - (radius*radius);
 
         // calculate discriminant n to check if hitpoint exists
@@ -38,19 +38,21 @@ public class Sphere implements Shape {
 
         // calculate actual hitpoint
         if(n >= 0) {
-            double t = 0;
-            double t1 = (-b + Math.sqrt((b*b) - (4*a*c))) / (2*a);
-            double t2 = (-b - Math.sqrt((b*b) - (4*a*c))) / (2*a);
+            double t0 = (-b + Math.sqrt((b*b) - (4*a*c))) / (2*a);
+            double t1 = (-b - Math.sqrt((b*b) - (4*a*c))) / (2*a);
 
-            // use smaller t to get first hit
-            t = t1 < t2 ? t1 : t2;
-
-            // if tmin <= t <= tmax return hitpoint
-            if(r.isValid(t)) {
-                Point x = Vector.add(r.getX0(), Vector.multiply(t, r.getDirection()));
+            // if tmin <= t0|t1 <= tmax return hitpoint
+            if(ray.isValid(t1)) {
+                Point x = Vector.add(ray.getX0(), Vector.multiply(t1, ray.getDirection()));
                 // normal vector = (x-center)/radius
                 Direction normal = Vector.negate(Vector.divide(Vector.subtract(center, x), radius));
-                return new Hit(t, x, normal, material);
+                return new Hit(t1, x, normal, material);
+            }
+            if(ray.isValid(t0)) {
+                Point x = Vector.add(ray.getX0(), Vector.multiply(t0, ray.getDirection()));
+                // normal vector = (x-center)/radius
+                Direction normal = Vector.negate(Vector.divide(Vector.subtract(center, x), radius));
+                return new Hit(t0, x, normal, material);
             }
         }
         return null;

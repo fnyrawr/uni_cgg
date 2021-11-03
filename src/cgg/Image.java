@@ -7,6 +7,8 @@ package cgg;
  * E-Mail: s51541@bht-berlin.de
  */
 
+// Constructive Solid Geometry nachschauen
+
 import cgtools.*;
 
 import java.util.ArrayList;
