@@ -45,13 +45,13 @@ public class Plane implements Shape {
         double dn = Vector.dotProduct(r.getDirection(), normal);
 
         // get hit distance: t = t = ( (plane.point-ray.x0)*plane.normal ) / ( ray.direction*plane.normal )
-        double t = Vector.dotProduct(Vector.subtract(point, r.getX0()), normal) / dn;
+        double t = Vector.dotProduct(Vector.subtract(point, r.getOrigin()), normal) / dn;
 
         // hitpoint with plane
         Point x = r.pointAt(t);
 
         // return null if any of the above stated cases occur
-        if(dn == 0 || !r.isValid(t) || Vector.length(Vector.subtract(x, point)) > radius) return null;
+        if(dn == 0 || !r.contains(t) || Vector.length(Vector.subtract(x, point)) > radius) return null;
 
         return new Hit(t, x, normal, material);
     };

@@ -27,7 +27,7 @@ public class Sphere implements Shape {
     }
 
     public Hit intersect(Ray ray) {
-        Point shiftedX0 = Vector.subtract(ray.getX0(), Vector.direction(center.x, center.y, center.z));
+        Point shiftedX0 = Vector.subtract(ray.getOrigin(), Vector.direction(center.x, center.y, center.z));
         // a = d^2 | b = 2x0*d | c = x0^2 - r^2
         double a = Vector.dotProduct(ray.getDirection(), ray.getDirection());
         double b = 2 * Vector.dotProduct(shiftedX0, ray.getDirection());
@@ -42,14 +42,14 @@ public class Sphere implements Shape {
             double t1 = (-b - Math.sqrt((b*b) - (4*a*c))) / (2*a);
 
             // if tmin <= t0|t1 <= tmax return hitpoint
-            if(ray.isValid(t1)) {
-                Point x = Vector.add(ray.getX0(), Vector.multiply(t1, ray.getDirection()));
+            if(ray.contains(t1)) {
+                Point x = Vector.add(ray.getOrigin(), Vector.multiply(t1, ray.getDirection()));
                 // normal vector = (x-center)/radius
                 Direction normal = Vector.negate(Vector.divide(Vector.subtract(center, x), radius));
                 return new Hit(t1, x, normal, material);
             }
-            if(ray.isValid(t0)) {
-                Point x = Vector.add(ray.getX0(), Vector.multiply(t0, ray.getDirection()));
+            if(ray.contains(t0)) {
+                Point x = Vector.add(ray.getOrigin(), Vector.multiply(t0, ray.getDirection()));
                 // normal vector = (x-center)/radius
                 Direction normal = Vector.negate(Vector.divide(Vector.subtract(center, x), radius));
                 return new Hit(t0, x, normal, material);

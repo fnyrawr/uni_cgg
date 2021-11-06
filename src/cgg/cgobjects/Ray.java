@@ -13,31 +13,31 @@ import cgtools.Vector;
 
 public class Ray {
     // origin: x0 | direction: d | ray path: tmin tmax
-    public final Point x0;
-    public final Direction d;
+    public final Point origin;
+    public final Direction direction;
     public final double tmin;
     public final double tmax;
 
     /**
      * Constructor for Ray class
-     * @param x0 - [Point] origin of ray
-     * @param d - [Direction] direction of ray
+     * @param origin - [Point] origin of ray
+     * @param direction - [Direction] direction of ray
      * @param tmin - [double] start of ray
      * @param tmax - [double] end of ray
      */
-    public Ray(Point x0, Direction d, double tmin, double tmax) {
-        this.x0 = x0;
-        this.d = Vector.normalize(d);
+    public Ray(Point origin, Direction direction, double tmin, double tmax) {
+        this.origin = origin;
+        this.direction = Vector.normalize(direction);
         this.tmin = tmin;
         this.tmax = tmax;
     }
 
     public Point pointAt(double t) {
         // x(t) = x0 + t*d
-        return Vector.add(x0, Vector.multiply(t, d));
+        return Vector.add(origin, Vector.multiply(t, direction));
     }
 
-    public boolean isValid(double t) {
+    public boolean contains(double t) {
         // return true if tmin <= t <= tmax
         if((t >= tmin) && (t <= tmax)) {
             return true;
@@ -45,11 +45,11 @@ public class Ray {
         return false;
     }
 
-    public Point getX0() {
-        return x0;
+    public Point getOrigin() {
+        return origin;
     }
 
     public Direction getDirection() {
-        return d;
+        return direction;
     }
 }

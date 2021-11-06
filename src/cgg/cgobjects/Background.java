@@ -15,7 +15,7 @@ public class Background implements Shape {
 
     public Background(Color color) {
         this.color = color;
-        this.material = new BackgroundMaterial(color);
+        this.material = new EmmittingMaterial(color);
     }
 
     public Hit intersect(Ray r) {

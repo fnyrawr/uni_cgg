@@ -13,8 +13,8 @@ import cgtools.*;
 
 public class Main {
     public static void main(String[] args) {
-        final int width = 1024;
-        final int height = 768;
+        final int width = 800;
+        final int height = 600;
 
         // Create an image, a new camera and a group for the image
         Image spheres = new Image(width, height, 2.2);
@@ -73,15 +73,15 @@ public class Main {
         groupTotoro.addShape(new Sphere(Vector.point(-1.75, -1, -2), 1, new DiffuseMaterial(Color.darkgreen)));
 
         // sample spheres
-        spheres.sample(new Raytracer(camera1, groupSpheres, 16), 32);
+        // spheres.sample(new Raytracer(camera1, groupSpheres, 16), 32);
 
         // Write the image to disk
-        final String filename1 = "doc/a04-3-spheres.png";
-        spheres.write(filename1);
-        System.out.println("Wrote image: " + filename1);
+        // final String filename1 = "doc/a04-3-spheres.png";
+        // spheres.write(filename1);
+        // System.out.println("Wrote image: " + filename1);
 
         // sample totoro
-        totoro.sample(new Raytracer(camera2, groupTotoro, 16), 64);
+        totoro.sample(new Raytracer(camera2, groupTotoro, 32), 64);
 
         // Write the image to disk
         final String filename2 = "doc/a04-scene.png";
