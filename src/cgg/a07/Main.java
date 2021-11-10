@@ -33,7 +33,7 @@ public class Main {
         Group group = new Group();
 
         // Group planes with bounding box
-        group.addShape(new Background(Color.white));
+        group.addShape(new Background(Color.black));
         Group planes = new Group();
         planes.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 3,
                 new DiffuseMaterial(Color.yellow)));
