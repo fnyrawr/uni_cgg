@@ -13,6 +13,7 @@ public class Sphere implements Shape {
     public final Point center;
     public final double radius;
     public final Material material;
+    protected final BoundingBox boundingBox;
 
     /**
      * Constructor for Sphere class
@@ -24,14 +25,15 @@ public class Sphere implements Shape {
         this.center = center;
         this.radius = radius;
         this.material = material;
+        this.boundingBox = new BoundingBox(radius);
     }
 
     public Hit intersect(Ray ray) {
-        Point shiftedX0 = Vector.subtract(ray.getOrigin(), Vector.direction(center.x, center.y, center.z));
+        Point shiftedOrigin = Vector.subtract(ray.getOrigin(), Vector.direction(center.x, center.y, center.z));
         // a = d^2 | b = 2x0*d | c = x0^2 - r^2
         double a = Vector.dotProduct(ray.getDirection(), ray.getDirection());
-        double b = 2 * Vector.dotProduct(shiftedX0, ray.getDirection());
-        double c = Vector.dotProduct(shiftedX0, shiftedX0) - (radius*radius);
+        double b = 2 * Vector.dotProduct(shiftedOrigin, ray.getDirection());
+        double c = Vector.dotProduct(shiftedOrigin, shiftedOrigin) - (radius*radius);
 
         // calculate discriminant n to check if hitpoint exists
         double n = b*b - 4*a*c;
@@ -43,18 +45,22 @@ public class Sphere implements Shape {
 
             // if tmin <= t0|t1 <= tmax return hitpoint
             if(ray.contains(t1)) {
-                Point x = Vector.add(ray.getOrigin(), Vector.multiply(t1, ray.getDirection()));
+                Point x = ray.pointAt(t1);
                 // normal vector = (x-center)/radius
-                Direction normal = Vector.negate(Vector.divide(Vector.subtract(center, x), radius));
+                Direction normal = Vector.divide(Vector.subtract(x, center), radius);
                 return new Hit(t1, x, normal, material);
             }
             if(ray.contains(t0)) {
-                Point x = Vector.add(ray.getOrigin(), Vector.multiply(t0, ray.getDirection()));
+                Point x = ray.pointAt(t0);
                 // normal vector = (x-center)/radius
-                Direction normal = Vector.negate(Vector.divide(Vector.subtract(center, x), radius));
+                Direction normal = Vector.divide(Vector.subtract(x, center), radius);
                 return new Hit(t0, x, normal, material);
             }
         }
         return null;
+    }
+
+    public BoundingBox bounds() {
+        return boundingBox;
     }
 }

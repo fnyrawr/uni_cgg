@@ -12,15 +12,21 @@ import cgtools.*;
 public class Background implements Shape {
     public final Color color;
     public final Material material;
+    public final BoundingBox boundingBox;
 
     public Background(Color color) {
         this.color = color;
         this.material = new EmmittingMaterial(color);
+        this.boundingBox = BoundingBox.everything;
     }
 
     public Hit intersect(Ray r) {
         Point x = Vector.point(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
         Direction normal = Vector.negate(r.getDirection());
         return new Hit(Double.POSITIVE_INFINITY, x, normal, material);
-    };
+    }
+
+    public BoundingBox bounds() {
+        return boundingBox;
+    }
 }

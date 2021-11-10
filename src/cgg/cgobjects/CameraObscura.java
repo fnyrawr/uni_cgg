@@ -12,7 +12,7 @@ import cgtools.*;
 public class CameraObscura {
     public final double phi;
     public final Point position;
-    public final Direction transformation;
+    public final Matrix matrix;
     public final double width;
     public final double height;
 
@@ -26,7 +26,15 @@ public class CameraObscura {
     public CameraObscura(double phi, Point position, double width, double height) {
         this.phi = phi;
         this.position = position;
-        this.transformation = Vector.subtract(Vector.point(0, 0, 0), position);
+        this.matrix = Matrix.identity;
+        this.width = width;
+        this.height = height;
+    }
+
+    public CameraObscura(double phi, Point position, Matrix matrix, double width, double height) {
+        this.phi = phi;
+        this.position = position;
+        this.matrix = matrix;
         this.width = width;
         this.height = height;
     }
@@ -40,17 +48,8 @@ public class CameraObscura {
         double dx = x-(width/2);
         double dy = -(y-(height/2));
         double dz = -((width/2) / (Math.tan(phi/2)));
-        return new Ray(position, Vector.direction(dx, dy, dz), 0,Double.POSITIVE_INFINITY);
-        // return new Ray(position, transformDirection(Vector.direction(dx, dy, dz), transformation), 0,Double.POSITIVE_INFINITY);
-    }
-
-    /**
-     * transforming day direction
-     * @param d - [Direction] direction of ray
-     * @param t - [Direction] transformation direction
-     */
-    private Direction transformDirection(Direction d, Direction t) {
-        Matrix rMat = Matrix.translation(t);
-        return Matrix.multiply(rMat, d);
+        Direction d = Matrix.multiply(matrix, Vector.normalize(Vector.direction(dx, dy, dz)));
+        Point cameraPosition = Matrix.multiply(matrix, position);
+        return new Ray(cameraPosition, d, 0, Double.POSITIVE_INFINITY);
     }
 }

@@ -107,6 +107,22 @@ public final class Vector {
     return a.x * b.x + a.y * b.y + a.z * b.z;
   }
 
+  public static double dotProductWithoutY(Direction a, Direction b) {
+    return a.x * b.x + a.z * b.z;
+  }
+
+  public static double dotProductWithoutY(Direction a, Point b) {
+    return a.x * b.x + a.z * b.z;
+  }
+
+  public static double dotProductWithoutY(Point a, Direction b) {
+    return a.x * b.x + a.z * b.z;
+  }
+
+  public static double dotProductWithoutY(Point a, Point b) {
+    return a.x * b.x + a.z * b.z;
+  }
+
   public static Direction crossProduct(Direction a, Direction b) {
     return direction(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z,
         a.x * b.y - a.y * b.x);

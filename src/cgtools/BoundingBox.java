@@ -16,7 +16,7 @@ public class BoundingBox {
     public static BoundingBox everything = new BoundingBox(Double.MAX_VALUE);
     public static BoundingBox empty = new BoundingBox(-Double.MAX_VALUE);
 
-    private BoundingBox(double size) {
+    public BoundingBox(double size) {
         min = point(-size, -size, -size);
         max = point(size, size, size);
     }
