@@ -8,4 +8,5 @@ import cgg.cgobjects.Ray;
 public interface Shape {
     public Hit intersect(Ray r);
     public BoundingBox bounds();
+    public BoundingBox calculateBounds();
 }

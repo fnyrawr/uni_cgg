@@ -12,7 +12,7 @@ import cgtools.*;
 public class Background implements Shape {
     public final Color color;
     public final Material material;
-    public final BoundingBox boundingBox;
+    protected BoundingBox boundingBox;
 
     public Background(Color color) {
         this.color = color;
@@ -28,5 +28,9 @@ public class Background implements Shape {
 
     public BoundingBox bounds() {
         return boundingBox;
+    }
+
+    public BoundingBox calculateBounds() {
+        return bounds();
     }
 }

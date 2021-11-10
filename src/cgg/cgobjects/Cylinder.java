@@ -15,7 +15,7 @@ public class Cylinder implements Shape {
     protected final double height;
     protected final Material material;
     protected final Group cylinderGroup;
-    protected final BoundingBox boundingBox;
+    protected BoundingBox boundingBox;
 
     /**
      * Constructor for Cylinder class
@@ -35,8 +35,8 @@ public class Cylinder implements Shape {
                 radius, height, material));
         cylinderGroup.addShape(new Plane(Vector.add(center, Vector.direction(0, height, 0)),
                 Vector.direction(0,1,0), radius, material));
-        this.boundingBox = new BoundingBox(Vector.add(Vector.normalize(Vector.direction(-radius, 0.0, -radius)), center),
-                Vector.add(Vector.normalize(Vector.direction(radius, 0.0, radius)), Vector.add(Vector.direction(0.0, height, 0.0), center)));
+        this.boundingBox = new BoundingBox(Vector.add(Vector.normalize(Vector.direction(-radius, -0.1, -radius)), center),
+                Vector.add(Vector.normalize(Vector.direction(radius, 0.1, radius)), Vector.add(Vector.direction(0.0, height, 0.0), center)));
     }
 
     public Hit intersect(Ray ray) {
@@ -45,5 +45,9 @@ public class Cylinder implements Shape {
 
     public BoundingBox bounds() {
         return boundingBox;
+    }
+
+    public BoundingBox calculateBounds() {
+        return bounds();
     }
 }

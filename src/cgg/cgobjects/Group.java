@@ -23,21 +23,14 @@ public class Group implements Shape {
 
     public Shape addShape(Shape shape) {
         shapes.add(shape);
-        if(shape.bounds() == BoundingBox.everything) {
-            this.boundingBox = BoundingBox.everything;
-        } else {
-            this.boundingBox.extend(shape.bounds());
-        }
         return this;
     }
 
     public Hit intersect(Ray ray) {
-        // if(!bounds().intersect(ray)) return null;
+        if(!bounds().intersect(ray)) return null;
         Hit nearestHit = null;
         for(Shape shape: shapes) {
-            Hit cmpHit = null;
-            // if(shape.bounds().intersect(ray))
-                cmpHit = shape.intersect(ray);
+            Hit cmpHit = shape.intersect(ray);
             if (nearestHit == null || (cmpHit != null && cmpHit.getDistance() <= nearestHit.getDistance())) {
                 nearestHit = cmpHit;
             }
@@ -47,5 +40,14 @@ public class Group implements Shape {
 
     public BoundingBox bounds() {
         return boundingBox;
+    }
+
+    // recursive bounding box bounds check over all groups and shapes before rendering
+    public BoundingBox calculateBounds() {
+        this.boundingBox = BoundingBox.empty;
+        for(Shape shape: shapes) {
+            this.boundingBox = this.boundingBox.extend(shape.calculateBounds());
+        }
+        return this.boundingBox;
     }
 }

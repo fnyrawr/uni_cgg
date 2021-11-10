@@ -14,7 +14,7 @@ public class CylinderCoat implements Shape {
     protected final double radius;
     protected final double height;
     protected final Material material;
-    protected final BoundingBox boundingBox;
+    protected BoundingBox boundingBox;
 
     public CylinderCoat(Point center, double radius, double height, Material material) {
         this.center = center;
@@ -59,5 +59,9 @@ public class CylinderCoat implements Shape {
 
     public BoundingBox bounds() {
         return boundingBox;
+    }
+
+    public BoundingBox calculateBounds() {
+        return bounds();
     }
 }

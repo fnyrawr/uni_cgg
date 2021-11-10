@@ -23,73 +23,91 @@ public class Main {
         Image image = new Image(width, height, 2.2);
 
         // a06-mirrors-glass-1.png Camera and Group
-        CameraObscura camera = new CameraObscura(Math.PI/2.25, Vector.point(1,0.5,1.5), width, height);
+        Matrix r = Matrix.rotation(Vector.direction(1, 0, -1), -25);
+        Matrix t = Matrix.translation(Vector.direction(0,0,0.25));
+        CameraObscura camera = new CameraObscura(Math.PI/2, Vector.point(0,0,0), Matrix.multiply(t, r), width, height);
+        // CameraObscura camera = new CameraObscura(Math.PI/2, Vector.point(0,0,1), width, height);
         Group group = new Group();
         group.addShape(new Background(Color.white));
-        group.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 3,
-                new DiffuseMirroringMaterial(Color.lightgray, 0.25)));
+        Group plane = new Group();
+        plane.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 3,
+                new DiffuseMirroringMaterial(Color.lightgray, 0.01)));
+        group.addShape(plane);
 
         // green mameshiba body
-        group.addShape(new Sphere(Vector.point(0.0, -0.25, -1.5), 0.25, new DiffuseMaterial(Color.green)));
-        group.addShape(new Sphere(Vector.point(0.1, -0.27, -1.65), 0.23, new DiffuseMaterial(Color.green)));
+        Group mameshibaGreen = new Group();
+        mameshibaGreen.addShape(new Sphere(Vector.point(0.0, -0.25, -1.5), 0.25, new DiffuseMaterial(Color.green)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(0.1, -0.27, -1.65), 0.23, new DiffuseMaterial(Color.green)));
         // ears
-        group.addShape(new Sphere(Vector.point(-0.25, -0.15, -1.5), 0.07, new DiffuseMaterial(Color.darkgreen)));
-        group.addShape(new Sphere(Vector.point(0.2, -0.15, -1.4), 0.07, new DiffuseMaterial(Color.darkgreen)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(-0.25, -0.15, -1.5), 0.07, new DiffuseMaterial(Color.darkgreen)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(0.2, -0.15, -1.4), 0.07, new DiffuseMaterial(Color.darkgreen)));
         // mouth
-        group.addShape(new Sphere(Vector.point(0.0, -0.25, -1.28), 0.04, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(-0.01, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(-0.02, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(0.01, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(0.02, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(0.0, -0.25, -1.28), 0.04, new DiffuseMaterial(Color.black)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(-0.01, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(-0.02, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(0.01, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(0.02, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
         // eyes
-        group.addShape(new Sphere(Vector.point(-0.06, -0.19, -1.29), 0.04, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(-0.063, -0.185, -1.258), 0.01, new DiffuseMaterial(Color.white)));
-        group.addShape(new Sphere(Vector.point(0.06, -0.19, -1.289), 0.04, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(0.06, -0.186, -1.255), 0.01, new DiffuseMaterial(Color.white)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(-0.06, -0.19, -1.29), 0.04, new DiffuseMaterial(Color.black)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(-0.063, -0.185, -1.258), 0.01, new DiffuseMaterial(Color.white)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(0.06, -0.19, -1.289), 0.04, new DiffuseMaterial(Color.black)));
+        mameshibaGreen.addShape(new Sphere(Vector.point(0.06, -0.186, -1.255), 0.01, new DiffuseMaterial(Color.white)));
+        group.addShape(mameshibaGreen);
 
         // yellow mameshiba body
-        group.addShape(new Sphere(Vector.point(-0.75, -0.25, -1.5), 0.25, new DiffuseMaterial(Color.yellow)));
-        group.addShape(new Sphere(Vector.point(-0.65, -0.27, -1.65), 0.23, new DiffuseMaterial(Color.yellow)));
+        Group mameshibaYellow = new Group();
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.75, -0.25, -1.5), 0.25, new DiffuseMaterial(Color.yellow)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.65, -0.27, -1.65), 0.23, new DiffuseMaterial(Color.yellow)));
         // ears
-        group.addShape(new Sphere(Vector.point(-1.0, -0.15, -1.5), 0.07, new DiffuseMaterial(Color.orange)));
-        group.addShape(new Sphere(Vector.point(-0.55, -0.15, -1.4), 0.07, new DiffuseMaterial(Color.orange)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-1.0, -0.15, -1.5), 0.07, new DiffuseMaterial(Color.orange)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.55, -0.15, -1.4), 0.07, new DiffuseMaterial(Color.orange)));
         // mouth
-        group.addShape(new Sphere(Vector.point(-0.75, -0.25, -1.28), 0.04, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(-0.76, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(-0.77, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(-0.74, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(-0.73, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.75, -0.25, -1.28), 0.04, new DiffuseMaterial(Color.black)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.76, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.77, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.74, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.73, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
         // eyes
-        group.addShape(new Sphere(Vector.point(-0.81, -0.19, -1.29), 0.04, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(-0.804, -0.185, -1.258), 0.01, new DiffuseMaterial(Color.white)));
-        group.addShape(new Sphere(Vector.point(-0.69, -0.19, -1.289), 0.04, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(-0.69, -0.186, -1.255), 0.01, new DiffuseMaterial(Color.white)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.81, -0.19, -1.29), 0.04, new DiffuseMaterial(Color.black)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.804, -0.185, -1.258), 0.01, new DiffuseMaterial(Color.white)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.69, -0.19, -1.289), 0.04, new DiffuseMaterial(Color.black)));
+        mameshibaYellow.addShape(new Sphere(Vector.point(-0.69, -0.186, -1.255), 0.01, new DiffuseMaterial(Color.white)));
+        group.addShape(mameshibaYellow);
 
         // blue mameshiba body
-        group.addShape(new Sphere(Vector.point(0.75, -0.25, -1.5), 0.25, new DiffuseMaterial(Color.blue)));
-        group.addShape(new Sphere(Vector.point(0.65, -0.27, -1.65), 0.23, new DiffuseMaterial(Color.blue)));
+        Group mameshibaBlue = new Group();
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.75, -0.25, -1.5), 0.25, new DiffuseMaterial(Color.blue)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.65, -0.27, -1.65), 0.23, new DiffuseMaterial(Color.blue)));
         // ears
-        group.addShape(new Sphere(Vector.point(0.5, -0.15, -1.5), 0.07, new DiffuseMaterial(Color.lightblue)));
-        group.addShape(new Sphere(Vector.point(0.95, -0.15, -1.4), 0.07, new DiffuseMaterial(Color.lightblue)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.5, -0.15, -1.5), 0.07, new DiffuseMaterial(Color.lightblue)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.95, -0.15, -1.4), 0.07, new DiffuseMaterial(Color.lightblue)));
         // mouth
-        group.addShape(new Sphere(Vector.point(0.75, -0.25, -1.28), 0.04, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(0.74, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(0.73, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(0.76, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(0.77, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.75, -0.25, -1.28), 0.04, new DiffuseMaterial(Color.black)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.74, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.73, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.76, -0.27, -1.28), 0.03, new DiffuseMaterial(Color.black)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.77, -0.275, -1.28), 0.03, new DiffuseMaterial(Color.black)));
         // eyes
-        group.addShape(new Sphere(Vector.point(0.69, -0.19, -1.29), 0.04, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(0.69, -0.185, -1.258), 0.01, new DiffuseMaterial(Color.white)));
-        group.addShape(new Sphere(Vector.point(0.81, -0.19, -1.289), 0.04, new DiffuseMaterial(Color.black)));
-        group.addShape(new Sphere(Vector.point(0.81, -0.186, -1.255), 0.01, new DiffuseMaterial(Color.white)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.69, -0.19, -1.29), 0.04, new DiffuseMaterial(Color.black)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.69, -0.185, -1.258), 0.01, new DiffuseMaterial(Color.white)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.81, -0.19, -1.289), 0.04, new DiffuseMaterial(Color.black)));
+        mameshibaBlue.addShape(new Sphere(Vector.point(0.81, -0.186, -1.255), 0.01, new DiffuseMaterial(Color.white)));
+        group.addShape(mameshibaBlue);
 
         // glass ball
-        group.addShape(new Sphere(Vector.point(-0.2, -0.375, -1.0), 0.125, new GlassMaterial(Color.lightgray)));
+        Group glassBall = new Group();
+        glassBall.addShape(new Sphere(Vector.point(-0.3, -0.375, -1.15), 0.125, new GlassMaterial(Color.lightgray)));
+        glassBall.addShape(new Sphere(Vector.point(-0.6, -0.375, -1.0), 0.125, new GlassMaterial(Color.lightgray)));
+        glassBall.addShape(new Sphere(Vector.point(0.3, -0.375, -1.15), 0.125, new GlassMaterial(Color.lightgray)));
+        group.addShape(glassBall);
 
         // mirror
-        group.addShape(new Plane(Vector.point(0.5, 1.0, -2.0), Vector.direction(0.125,-1.5,1), 1.25,
+        Group mirror = new Group();
+        mirror.addShape(new Plane(Vector.point(0.5, 1.0, -2.0), Vector.direction(0.125,-1.5,1), 1.25,
                 new MirroringMaterial(Color.lightgray)));
+        // group.addShape(mirror);
 
+        group.calculateBounds();
         image.sample(new Raytracer(camera, group, 32), 64);
 
         // Write the images to disk

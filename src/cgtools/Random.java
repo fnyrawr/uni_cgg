@@ -48,8 +48,7 @@ public class Random extends java.util.Random {
 
   // random function with min and max range specified
   public static double randomMinMax(double min, double max) {
-    double dx = max - min;
-    return random() * .9999 * dx - dx/2;
+    return min + random() * (max - min);
   }
 
   @Override

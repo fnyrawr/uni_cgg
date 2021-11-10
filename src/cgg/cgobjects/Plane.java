@@ -14,7 +14,7 @@ public class Plane implements Shape {
     public final Direction normal;
     public final double radius;
     public final Material material;
-    public final BoundingBox boundingBox;
+    protected BoundingBox boundingBox;
 
     /**
      * Constructor for Plane class
@@ -27,8 +27,8 @@ public class Plane implements Shape {
         this.normal = normal;
         this.radius = radius;
         this.material = material;
-        this.boundingBox = new BoundingBox(Vector.add(Vector.normalize(Vector.direction(-radius, -0.1, -radius)), point),
-                Vector.add(Vector.normalize(Vector.direction(radius, 0.1, radius)), point));
+        this.boundingBox = new BoundingBox(Vector.add(Vector.direction(-radius, -0.001, -radius), point),
+                Vector.add(Vector.direction(radius, 0.001, radius), point));
     }
 
     public Hit intersect(Ray r) {
@@ -61,5 +61,9 @@ public class Plane implements Shape {
 
     public BoundingBox bounds() {
         return boundingBox;
+    }
+
+    public BoundingBox calculateBounds() {
+        return bounds();
     }
 }

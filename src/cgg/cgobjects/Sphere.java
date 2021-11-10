@@ -13,7 +13,7 @@ public class Sphere implements Shape {
     public final Point center;
     public final double radius;
     public final Material material;
-    protected final BoundingBox boundingBox;
+    protected BoundingBox boundingBox;
 
     /**
      * Constructor for Sphere class
@@ -25,7 +25,8 @@ public class Sphere implements Shape {
         this.center = center;
         this.radius = radius;
         this.material = material;
-        this.boundingBox = new BoundingBox(radius);
+        this.boundingBox = new BoundingBox(Vector.add(Vector.direction(-radius, -radius, -radius), center),
+                Vector.add(Vector.direction(radius, radius, radius), center));
     }
 
     public Hit intersect(Ray ray) {
@@ -62,5 +63,9 @@ public class Sphere implements Shape {
 
     public BoundingBox bounds() {
         return boundingBox;
+    }
+
+    public BoundingBox calculateBounds() {
+        return bounds();
     }
 }
