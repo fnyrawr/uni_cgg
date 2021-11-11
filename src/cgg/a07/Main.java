@@ -11,6 +11,8 @@ import cgg.Image;
 import cgg.cgobjects.*;
 import cgtools.*;
 
+import java.util.ArrayList;
+
 import static cgtools.Vector.color;
 import static cgtools.Vector.point;
 
@@ -26,103 +28,135 @@ public class Main {
         Image image = new Image(width, height, 2.2);
 
         // preparation for translation and rotation
-        // Matrix r = Matrix.rotation(Vector.direction(1, 0, 0), -25);
-        // Matrix t = Matrix.translation(Vector.direction(0,1,1));
-        // CameraObscura camera = new CameraObscura(Math.PI/2, Vector.point(0,0,0), Matrix.multiply(t, r), width, height);
-        CameraObscura camera = new CameraObscura(Math.PI/2, Vector.point(0,0,0), width, height);
+        // Matrix r = Matrix.rotation(Vector.direction(1, 0, 0), -35);
+        Matrix r = Matrix.rotation(Vector.direction(0, 1, 0), -7.5);
+        Matrix t = Matrix.translation(Vector.direction(0.1,0,3.3));
+        CameraObscura camera = new CameraObscura(Math.PI/2, Vector.point(0,0,0), Matrix.multiply(t, r), width, height);
         Group group = new Group();
 
         // Group planes with bounding box
-        group.addShape(new Background(color(0.005, 0.005, 0.005)));
+        group.addShape(new Background(color(0.01, 0.01, 0.01)));
         Group planes = new Group();
-        planes.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 3,
-                new DiffuseMaterial(Color.yellow)));
-        planes.addShape(new Plane(Vector.point(0.0, -0.3, 0.0), Vector.direction(0,1,0), 3,
-                new WaterMaterial(Color.lightblue, 0.7)));
+        planes.addShape(new Plane(Vector.point(0.0, -1.31, 0.0), Vector.direction(0,1,0), 3,
+                new EmmittingMaterial(Color.white)));
+        planes.addShape(new Cylinder(Vector.point(0.0, -1.3, 0.0), 3, 1,
+                new WaterMaterial(Color.lightblue, 0.5)));
+        planes.addShape(new CylinderCoat(Vector.point(0,-0.8,0), 3, 1, new DiffuseMaterial(Color.darkgreen)));
+        planes.addShape(new PlaneWinnerRadius(Vector.point(0.0, -0.3, 0.0), Vector.direction(0,1,0), 9, 3,
+                new DiffuseMaterial(Color.darkgreen)));
+        // add bubbles into the lake
+        createBubbles(planes, Vector.point(0,-0.3,0), 3, 1.0, 0.05, 32,12);
         group.addShape(planes);
 
-        // moon
-        Group moon = new Group();
-        moon.addShape(new Sphere(Vector.point(-5.0, 5.0, -20.0), 7.0, new EmmittingMaterial(Color.lightgray)));
-        group.addShape(moon);
+        // create a forest around the lake
+        Group forest = new Group();
+        createTreeRing(forest, Vector.point(0, -0.3, 0), Matrix.identity(), 3.5, 12);
+        createTreeRing(forest, Vector.point(0, -0.3, 0),
+                Matrix.rotation(Vector.direction(0, 1, 0), 45), 4.5, 14);
+        createTreeRing(forest, Vector.point(0, -0.3, 0),
+                Matrix.rotation(Vector.direction(0, 1, 0), 45/4), 5.5, 16);
+        createTreeRing(forest, Vector.point(0, -0.3, 0),
+                Matrix.rotation(Vector.direction(0, 1, 0), 45/2), 6.5, 18);
+        createTreeRing(forest, Vector.point(0, -0.3, 0),
+                Matrix.rotation(Vector.direction(0, 1, 0), 45/8), 7.5, 20);
+        // add fireflies into the forest
+        createFireflies(forest, Vector.point(0, -0.25, 0), 3.0, 7.5, 0.75, 0.005, 32, 64);
+        group.addShape(forest);
 
-        // flash light from origin
-        Group flashlight = new Group();
-        flashlight.addShape(new Sphere(Vector.point(0.0, 0.0, 2.0), 0.5, new EmmittingMaterial(Color.white)));
-        group.addShape(flashlight);
-
-        // Totoro body
-        Group totoroBody = new Group();
-        Group totoroHead = new Group();
-        totoroBody.addShape(new Sphere(Vector.point(0.0, -0.25, -2.5), 0.75, new DiffuseMaterial(Color.gray)));
-        totoroBody.addShape(new Sphere(Vector.point(0.0, 0.2, -2.3), 0.65, new DiffuseMaterial(Color.gray)));
-        totoroBody.addShape(new Sphere(Vector.point(0.0, 0.5, -2.1), 0.5, new DiffuseMaterial(Color.gray)));
-        totoroBody.addShape(new Sphere(Vector.point(0.0, -0.25, -2.35), 0.65, new DiffuseMaterial(Color.white)));
-        totoroBody.addShape(new Sphere(Vector.point(0.0, 0.2, -2.23), 0.6, new DiffuseMaterial(Color.white)));
-        totoroHead.addShape(new Sphere(Vector.point(-0.15, 0.55, -1.65), 0.07, new DiffuseMaterial(Color.white)));
-        totoroHead.addShape(new Sphere(Vector.point(0.15, 0.55, -1.65), 0.07, new DiffuseMaterial(Color.white)));
-        totoroHead.addShape(new Sphere(Vector.point(-0.14, 0.54, -1.6), 0.03, new EmmittingMaterial(Color.red)));
-        totoroHead.addShape(new Sphere(Vector.point(0.14, 0.54, -1.6), 0.03, new EmmittingMaterial(Color.red)));
-        totoroHead.addShape(new Sphere(Vector.point(0.0, 0.5, -1.6), 0.02, new DiffuseMaterial(Color.gray)));
-        totoroHead.addShape(new Sphere(Vector.point(-0.01, 0.5, -1.6), 0.02, new DiffuseMaterial(Color.gray)));
-        totoroHead.addShape(new Sphere(Vector.point(0.01, 0.5, -1.6), 0.02, new DiffuseMaterial(Color.gray)));
-        totoroHead.addShape(new Sphere(Vector.point(-0.2, 0.85, -1.8), 0.1, new DiffuseMaterial(Color.gray)));
-        totoroHead.addShape(new Sphere(Vector.point(0.2, 0.85, -1.8), 0.1, new DiffuseMaterial(Color.gray)));
-        totoroHead.addShape(new Sphere(Vector.point(-0.22, 0.9, -1.77), 0.1, new DiffuseMaterial(Color.gray)));
-        totoroHead.addShape(new Sphere(Vector.point(0.22, 0.9, -1.77), 0.1, new DiffuseMaterial(Color.gray)));
-        group.addShape(totoroBody);
-        group.addShape(totoroHead);
-
-        // cloud
-        Group cloud = new Group();
-        cloud.addShape(new Sphere(Vector.point(-1.75, 1.0, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.65, 1.0, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.55, 1.0, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.45, 1.0, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.35, 1.0, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.7, 0.95, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.6, 0.95, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.5, 0.95, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.4, 0.95, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.7, 1.05, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.6, 1.05, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.5, 1.05, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        cloud.addShape(new Sphere(Vector.point(-1.4, 1.05, -2.25), 0.1, new DiffuseMaterial(Color.white)));
-        group.addShape(cloud);
-
-        // bushes
-        Group bushesLeft = new Group();
-        Group bushesRight = new Group();
-        bushesLeft.addShape(new Sphere(Vector.point(-1.25, -0.5, -3.0), 1, new DiffuseMaterial(Color.darkgreen)));
-        bushesLeft.addShape(new Sphere(Vector.point(-1.5, -0.75, -2.5), 1, new DiffuseMaterial(Color.darkgreen)));
-        bushesLeft.addShape(new Sphere(Vector.point(-1.75, -1.0, -2.0), 1, new DiffuseMaterial(Color.darkgreen)));
-        bushesRight.addShape(new Sphere(Vector.point(1.5, -0.75, -2.5), 1, new DiffuseMaterial(Color.darkgreen)));
-        bushesRight.addShape(new Sphere(Vector.point(1.75, -1.0, -2.0), 1, new DiffuseMaterial(Color.darkgreen)));
-        group.addShape(bushesLeft);
-        group.addShape(bushesRight);
-
-        // fireflies
-        Group firefliesLeft = new Group();
-        Group firefliesMiddle = new Group();
-        Group firefliesRight = new Group();
-        for(int i = 0; i < 150; i++) {
-            firefliesLeft.addShape(new Sphere(Vector.point(Random.randomMinMax(-1.25, -0.5), Random.randomMinMax(-0.25, 0.0), Random.randomMinMax(-0.25, -1.0)),
-                    0.001, new EmmittingMaterial(Color.yellowgreen)));
-            firefliesMiddle.addShape(new Sphere(Vector.point(Random.randomMinMax(-0.5, 0.5), Random.randomMinMax(-0.25, 0.0), Random.randomMinMax(-0.25, -1.0)),
-                    0.001, new EmmittingMaterial(Color.yellowgreen)));
-            firefliesRight.addShape(new Sphere(Vector.point(Random.randomMinMax(0.5, 1.25), Random.randomMinMax(-0.25, 0.0), Random.randomMinMax(-0.25, -1.0)),
-                    0.001, new EmmittingMaterial(Color.yellowgreen)));
-        }
-        group.addShape(firefliesLeft);
-        group.addShape(firefliesMiddle);
-        group.addShape(firefliesRight);
+        // stars
+        Group groupStars = new Group();
+        createStars(groupStars, Vector.point(0, 0, 0), 20, 15, 0.1, 32, 20);
+        group.addShape(groupStars);
 
         group.calculateBounds();
         image.sample(new Raytracer(camera, group, 32), 64);
 
         // Write the images to disk
-        final String filename = "doc/test.png";
+        final String filename = "doc/a07-1.png";
         image.write(filename);
         System.out.println("Wrote image: " + filename);
+    }
+
+    public static void createBubbles(Group group, Point point, double radius, double height, double bubbleWidth, int sectors, int nPerSector) {
+        ArrayList<Group> bubbleSectors = new ArrayList<Group>();
+        for(int i=0; i<sectors; i++) {
+            bubbleSectors.add(new Group());
+        }
+        double secAngle = 2*Math.PI / sectors;
+        double bw2 = 2*bubbleWidth;
+        for(int j=0; j<sectors; j++) {
+            for(int i=0; i<nPerSector; i++) {
+                double phi = secAngle*j + Random.randomMinMax(0, secAngle);
+                double x = point.x + Random.randomMinMax(bw2, radius-bw2) * Math.cos(phi);
+                double y = point.y + Random.randomMinMax(-height-bw2, 0);
+                double z = point.z + Random.randomMinMax(bw2, radius-bw2) * Math.sin(phi*i);
+                bubbleSectors.get(j).addShape(new Sphere(Vector.point(x, y, z), bubbleWidth, new GlassMaterial(Color.lightgray)));
+            }
+        }
+        for(Group bubbleSector: bubbleSectors) group.addShape(bubbleSector);
+    }
+
+    public static void createFireflies(Group group, Point point, double innerRadius, double outerRadius, double height, double ffSize, int sectors, int nPerSector) {
+        ArrayList<Group> ffSectors = new ArrayList<Group>();
+        for(int i=0; i<sectors; i++) {
+            ffSectors.add(new Group());
+        }
+        double secAngle = 2*Math.PI / sectors;
+        double ff2 = 2*ffSize;
+        for(int j=0; j<sectors; j++) {
+            for(int i=0; i<nPerSector; i++) {
+                double phi = secAngle*j + Random.randomMinMax(0, secAngle);
+                double radius = Random.randomMinMax(innerRadius, outerRadius);
+                double x = point.x + radius * Math.cos(phi);
+                double y = point.y + Random.randomMinMax(ff2, height-ff2);
+                double z = point.z + radius * Math.sin(phi);
+                ffSectors.get(j).addShape(new Sphere(Vector.point(x, y, z), ffSize, new EmmittingMaterial(Color.yellowgreen)));
+            }
+        }
+        for(Group ffSector: ffSectors) group.addShape(ffSector);
+    }
+
+    public static void createStars(Group group, Point point, double radius, double height, double starSize, int sectors, int nPerSector) {
+        ArrayList<Group> starSectors = new ArrayList<Group>();
+        for(int i=0; i<sectors; i++) {
+            starSectors.add(new Group());
+        }
+        double secAngle = 2*Math.PI / sectors;
+        for(int j=0; j<sectors; j++) {
+            for(int i=0; i<nPerSector; i++) {
+                double phi = secAngle*j + Random.randomMinMax(0, secAngle);
+                double x = point.x + radius * Math.cos(phi);
+                double y = point.y + Random.randomMinMax(0, height);
+                double z = point.z + radius * Math.sin(phi);
+                starSectors.get(j).addShape(new Sphere(Vector.point(x, y, z), Random.randomMinMax(starSize/8, starSize),
+                        new EmmittingMaterial(Color.white)));
+            }
+        }
+        for(Group starSector: starSectors) group.addShape(starSector);
+    }
+
+    public static void createTreeRing(Group group, Point point, Matrix m, double radius, int n) {
+        int sectors = 32;
+        ArrayList<Group> treeSectors = new ArrayList<Group>();
+        for(int i=0; i<sectors; i++) {
+            treeSectors.add(new Group());
+        }
+        for(int i=0; i<n; i++) {
+            double phi = Math.PI * 2.0 / n;
+            double x = point.x + radius * Math.cos(phi*i);
+            double y = point.y;
+            double z = point.z + radius * Math.sin(phi*i);
+            double sector = (double) sectors/n*i;
+            treeSectors.get((int) sector).addShape(createTree(Matrix.multiply(m, Vector.point(x, y, z))));
+        }
+        for(Group treeSector: treeSectors) group.addShape(treeSector);
+    }
+
+    public static Group createTree(Point point) {
+        Group tree = new Group();
+        tree.addShape(new Cylinder(point, 0.1, 0.5, new DiffuseMaterial(Color.brown)));
+        tree.addShape(new Sphere(Vector.add(point, Vector.direction(0, 0.75, 0)), 0.4, new DiffuseMaterial(Color.darkgreen)));
+        tree.addShape(new Sphere(Vector.add(point, Vector.direction(0, 0.95, 0)), 0.3, new DiffuseMaterial(Color.darkgreen)));
+        return tree;
     }
 }

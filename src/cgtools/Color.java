@@ -91,6 +91,7 @@ public final class Color {
   public static final Color yellow = color(1, 1, 0);
   public static final Color yellowgreen = color(0.5, 1, 0);
   public static final Color orange = color(1, 0.35, 0);
+  public static final Color brown = color(0.471, 0.263, 0.051);
 
   private static Color hue(double h) {
     double r = Math.abs(h * 6 - 3) - 1;

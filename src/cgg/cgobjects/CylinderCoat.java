@@ -21,8 +21,8 @@ public class CylinderCoat implements Shape {
         this.radius = radius;
         this.height = height;
         this.material = material;
-        this.boundingBox = new BoundingBox(Vector.add(Vector.normalize(Vector.direction(-radius, 0.0, -radius)), center),
-                Vector.add(Vector.normalize(Vector.direction(radius, 0.0, radius)), Vector.add(Vector.direction(0.0, height, 0.0), center)));
+        this.boundingBox = new BoundingBox(Vector.add(Vector.direction(-radius, 0.0, -radius), center),
+                Vector.add(Vector.direction(radius, 0.0, radius), Vector.add(Vector.direction(0.0, height, 0.0), center)));
     }
 
     public Hit intersect(Ray ray) {

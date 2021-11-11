@@ -35,8 +35,7 @@ public class Cylinder implements Shape {
                 radius, height, material));
         cylinderGroup.addShape(new Plane(Vector.add(center, Vector.direction(0, height, 0)),
                 Vector.direction(0,1,0), radius, material));
-        this.boundingBox = new BoundingBox(Vector.add(Vector.normalize(Vector.direction(-radius, -0.1, -radius)), center),
-                Vector.add(Vector.normalize(Vector.direction(radius, 0.1, radius)), Vector.add(Vector.direction(0.0, height, 0.0), center)));
+        this.boundingBox = cylinderGroup.calculateBounds();
     }
 
     public Hit intersect(Ray ray) {
@@ -44,10 +43,10 @@ public class Cylinder implements Shape {
     }
 
     public BoundingBox bounds() {
-        return boundingBox;
+        return cylinderGroup.bounds();
     }
 
     public BoundingBox calculateBounds() {
-        return bounds();
+        return cylinderGroup.bounds();
     }
 }
