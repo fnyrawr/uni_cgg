@@ -28,9 +28,8 @@ public class Main {
         Image image = new Image(width, height, 2.2);
 
         // preparation for translation and rotation
-        // Matrix r = Matrix.rotation(Vector.direction(1, 0, 0), -35);
-        Matrix r = Matrix.rotation(Vector.direction(0, 1, 0), -7.5);
-        Matrix t = Matrix.translation(Vector.direction(0.1,0,3.3));
+        Matrix r = Matrix.rotation(Vector.direction(1, 0, 0), -80);
+        Matrix t = Matrix.translation(Vector.direction(0,5.5,1.25));
         CameraObscura camera = new CameraObscura(Math.PI/2, Vector.point(0,0,0), Matrix.multiply(t, r), width, height);
         Group group = new Group();
 
@@ -57,22 +56,22 @@ public class Main {
                 Matrix.rotation(Vector.direction(0, 1, 0), 45/4), 5.5, 16);
         createTreeRing(forest, Vector.point(0, -0.3, 0),
                 Matrix.rotation(Vector.direction(0, 1, 0), 45/2), 6.5, 18);
-        createTreeRing(forest, Vector.point(0, -0.3, 0),
-                Matrix.rotation(Vector.direction(0, 1, 0), 45/8), 7.5, 20);
+        // createTreeRing(forest, Vector.point(0, -0.3, 0),
+        //         Matrix.rotation(Vector.direction(0, 1, 0), 45/8), 7.5, 20);
         // add fireflies into the forest
         createFireflies(forest, Vector.point(0, -0.25, 0), 3.0, 7.5, 0.75, 0.005, 32, 64);
         group.addShape(forest);
 
         // stars
-        Group groupStars = new Group();
-        createStars(groupStars, Vector.point(0, 0, 0), 20, 15, 0.1, 32, 20);
-        group.addShape(groupStars);
+        // Group groupStars = new Group();
+        // createStars(groupStars, Vector.point(0, 0, 0), 20, 15, 0.1, 32, 20);
+        // group.addShape(groupStars);
 
         group.calculateBounds();
         image.sample(new Raytracer(camera, group, 32), 64);
 
         // Write the images to disk
-        final String filename = "doc/a07-1.png";
+        final String filename = "doc/a07-2.png";
         image.write(filename);
         System.out.println("Wrote image: " + filename);
     }
