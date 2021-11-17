@@ -30,7 +30,7 @@ public class Main {
         Group group = new Group();
         group.addShape(new Background(Color.white));
         Group plane = new Group();
-        plane.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 3,
+        plane.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0, 1, 0), 3,
                 new DiffuseMirroringMaterial(Color.lightgray, 0.01)));
         group.addShape(plane);
 

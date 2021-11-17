@@ -8,6 +8,7 @@ package cgg.cgobjects;
  */
 
 import cgtools.BoundingBox;
+import cgtools.Matrix;
 import cgtools.Shape;
 
 import java.util.ArrayList;
@@ -15,13 +16,21 @@ import java.util.ArrayList;
 public class Group implements Shape {
     protected ArrayList<Shape> shapes;
     protected BoundingBox boundingBox;
+    protected Transformation transformation;
 
     public Group() {
-        shapes = new ArrayList<Shape>();
+        this.shapes = new ArrayList<Shape>();
         this.boundingBox = BoundingBox.empty;
+        this.transformation = new Transformation(Matrix.identity);
     }
 
-    public Shape addShape(Shape shape) {
+    public Group(Matrix transformation) {
+        this.shapes = new ArrayList<Shape>();
+        this.boundingBox = BoundingBox.empty;
+        this.transformation = new Transformation(transformation);
+    }
+
+    public Group addShape(Shape shape) {
         shapes.add(shape);
         return this;
     }

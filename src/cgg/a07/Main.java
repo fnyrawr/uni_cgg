@@ -14,7 +14,6 @@ import cgtools.*;
 import java.util.ArrayList;
 
 import static cgtools.Vector.color;
-import static cgtools.Vector.point;
 
 public class Main {
     public static void main(String[] args) {
