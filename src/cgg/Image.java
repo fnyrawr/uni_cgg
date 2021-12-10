@@ -88,7 +88,7 @@ public class Image {
                     int remMin = (int) remainingTime/60;
                     int remSec = (int) remainingTime % 60;
                     System.out.print(String.format("\r%.2f%% done | %d:%02d running | %d:%02d remaining | %d:%02d expected",
-                            percentage, runMin, runSec, remMin, remSec, expMin, expSec));
+                        percentage, runMin, runSec, remMin, remSec, expMin, expSec));
 
                     setPixel(x, y, pixels.get(z).get());
                     z++;
