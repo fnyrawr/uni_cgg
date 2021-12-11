@@ -13,6 +13,8 @@ import cgtools.*;
 
 import java.util.ArrayList;
 
+import static cgtools.Vector.color;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -26,7 +28,7 @@ public class Main {
         Group group = new Group();
 
         // Group planes with bounding box
-        group.addShape(new Background(Color.gray));
+        group.addShape(new Background(color(0.005, 0.005, 0.005)));
         Group planes = new Group();
         planes.addShape(new Plane(Vector.point(0.0, -0.5, 0.0), Vector.direction(0,1,0), 5,
                 new DiffuseMaterial(Color.darkgreen)));
@@ -79,16 +81,25 @@ public class Main {
         mountains.addShape(new Sphere(Vector.point(6, -1, -7), 2.5, new DiffuseMaterial(Color.darkgreen)));
         group.addShape(mountains);
 
+        // fireflies
+        group.addShape(createFireflies(group, Vector.point(-1.3, -0.5, -1.25), Vector.point(-1.7, 0.25, -2.95), 0.005, 50));
+        group.addShape(createFireflies(group, Vector.point(1.3, -0.5, -1.25), Vector.point(1.7, 0.25, -2.95), 0.005, 50));
+
+        // stars
+        Group groupStars = new Group();
+        createStars(groupStars, Vector.point(0, 0, 0), 20, 5, 15, 0.1, 32, 20);
+        group.addShape(groupStars);
+
         group.calculateBounds();
         image.sample(new Raytracer(camera, group, 32), 32);
 
         // Write the images to disk
-        final String filename = "doc/a08-1.png";
+        final String filename = "doc/a08-2.png";
         image.write(filename);
         System.out.println("Wrote image: " + filename);
     }
 
-    public static void createStars(Group group, Point point, double radius, double height, double starSize, int sectors, int nPerSector) {
+    public static void createStars(Group group, Point point, double radius, double minHeight, double maxHeight, double starSize, int sectors, int nPerSector) {
         ArrayList<Group> starSectors = new ArrayList<Group>();
         for(int i=0; i<sectors; i++) {
             starSectors.add(new Group());
@@ -98,7 +109,7 @@ public class Main {
             for(int i=0; i<nPerSector; i++) {
                 double phi = secAngle*j + Random.randomMinMax(0, secAngle);
                 double x = point.x + radius * Math.cos(phi);
-                double y = point.y + Random.randomMinMax(0, height);
+                double y = point.y + Random.randomMinMax(minHeight, maxHeight);
                 double z = point.z + radius * Math.sin(phi);
                 starSectors.get(j).addShape(new Sphere(Vector.point(x, y, z), Random.randomMinMax(starSize/8, starSize),
                         new EmmittingMaterial(Color.white)));
@@ -155,5 +166,17 @@ public class Main {
         tree.addShape(new Sphere(Vector.add(point, Vector.direction(0, 0.75, 0)), 0.4, new DiffuseMaterial(Color.darkgreen)));
         tree.addShape(new Sphere(Vector.add(point, Vector.direction(0, 0.95, 0)), 0.3, new DiffuseMaterial(Color.darkgreen)));
         return tree;
+    }
+
+    public static Group createFireflies(Group group, Point pointMin, Point pointMax, double ffSize, int n) {
+        Group fireflies = new Group();
+        double ff2 = 2*ffSize;
+        for(int j=0; j<n; j++) {
+            double x = Random.randomMinMax(pointMin.x+ff2, pointMax.x-ff2);
+            double y = Random.randomMinMax(pointMin.y+ff2, pointMax.y-ff2);
+            double z = Random.randomMinMax(pointMin.z+ff2, pointMax.z-ff2);
+            fireflies.addShape(new Sphere(Vector.point(x, y, z), ffSize, new EmmittingMaterial(Color.yellowgreen)));
+        }
+        return fireflies;
     }
 }
