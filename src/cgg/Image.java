@@ -46,13 +46,18 @@ public class Image {
         ImageWriter.write(filename, data, width, height);
     }
 
-    // Sets the color for one particular pixel in each image - sampling in multithreading
     public void sample(Sampler s, int n) {
+        sample(s, n, 0);
+    }
+
+    // Sets the color for one particular pixel in each image - sampling in multithreading
+    public void sample(Sampler s, int n, int threads) {
         // get start time
         long startTime = System.nanoTime();
-        // Pool creation, use all available processors for sampling
-        int cores = Runtime.getRuntime().availableProcessors();
-        ExecutorService pool = Executors.newFixedThreadPool(cores);
+        // Pool creation, use all available processors for sampling if no thread count is specified
+        int maxThreads = Runtime.getRuntime().availableProcessors();
+        if (threads <= 0 || threads > maxThreads) threads = maxThreads;
+        ExecutorService pool = Executors.newFixedThreadPool(threads);
         // pixel array for calculation
         ArrayList<Future<Color>> pixels = new ArrayList<Future<Color>>();
         for (int x = 0; x != width; x++) {
@@ -71,8 +76,8 @@ public class Image {
         // collect calculated results
         int z = 0;
         double pixelsTotal = width*height;
-        System.out.println(String.format("Rendering %d x %d image with recursionDepth %d and %dx antialiasing settings",
-                width, height, s.getRecursionDepth(), n));
+        System.out.println(String.format("Rendering %d x %d image with recursionDepth %d and %dx antialiasing settings using %d threads",
+                width, height, s.getRecursionDepth(), n, threads));
         for (int x = 0; x != width; x++) {
             for (int y = 0; y != height; y++) {
                 try {
@@ -87,8 +92,8 @@ public class Image {
                     int expSec = (int) expectedTime % 60;
                     int remMin = (int) remainingTime/60;
                     int remSec = (int) remainingTime % 60;
-                    System.out.print(String.format("\r%.2f%% done | %d:%02d running | %d:%02d remaining | %d:%02d expected",
-                        percentage, runMin, runSec, remMin, remSec, expMin, expSec));
+                    // System.out.print(String.format("\r%.2f%% done | %d:%02d running | %d:%02d remaining | %d:%02d expected",
+                    //     percentage, runMin, runSec, remMin, remSec, expMin, expSec));
 
                     setPixel(x, y, pixels.get(z).get());
                     z++;
@@ -102,7 +107,7 @@ public class Image {
         long totalTime = (endTime-startTime)/1000000000;
         int runMin = (int) totalTime/60;
         int runSec = (int) totalTime % 60;
-        System.out.print(String.format("\rrendering completed in %d:%02d \n\n", runMin, runSec));
+        System.out.print(String.format("\rrendering with %d threads completed in %d:%02d (%d Seconds) \n\n", threads, runMin, runSec, totalTime));
         pool.shutdown();
     }
 
