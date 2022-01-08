@@ -13,8 +13,8 @@ import cgtools.*;
 
 public class Main {
     public static void main(String[] args) {
-        final int width = 1920;
-        final int height = 1080;
+        final int width = 1980;
+        final int height = 1020;
 
         // Create a new camera and sample spheres
         Image image = new Image(width, height, 2.2);
@@ -25,12 +25,12 @@ public class Main {
         Group group = new Group();
 
         group.addShape(new Background(new Texture("textures/desertSkybox.jpg")));
-        group.addShape(new Sphere(Vector.point(0, 0, -2.5), 0.5, new MirroringMaterial(new Texture("textures/waterTexture.png", Matrix.scaling(0.5, 0.5, 0.5)))));
+        group.addShape(new Sphere(Vector.point(0, 0, -2.5), 0.5, new DiffuseMirroringMaterial(new GradientTexture(Color.yellow, Color.red), 0.5)));
         group.addShape(new Sphere(Vector.point(-1.5, 0, -2.5), 0.5, new DiffuseMaterial(new CheckerBoardTexture(20))));
         group.addShape(new Sphere(Vector.point(1.5, 0, -2.5), 0.5, new GlassMaterial(Color.lightgray)));
         group.addShape(new Sphere(Vector.point(1.5, 0, -2.5), 0.45, new DiffuseMaterial(new PolkaDotsTexture(0.5, Matrix.scaling(15, 15, 15), Color.darkgray, Color.white))));
         group.addShape(new Cylinder(Vector.point(-1.5, -0.55, -2.5), 0.5, 0.5, new DiffuseMaterial(new CheckerBoardTexture(20))));
-        group.addShape(new Sphere(Vector.point(0.75, 0, -5), 1, new DiffuseMirroringMaterial(new GradientTexture(Color.yellow, Color.red), 0.5)));
+        group.addShape(new Plane(Vector.point(0,-0.5,0), Vector.direction(0,1,0), 5, new MirroringMaterial(new Texture("textures/waterTexture.png", Matrix.scaling(1.25, 1.25, 1.25)))));
 
         group.calculateBounds();
         image.sample(new Raytracer(camera, group, 32), 32);

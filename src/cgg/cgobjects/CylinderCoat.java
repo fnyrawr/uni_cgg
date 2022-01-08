@@ -41,8 +41,8 @@ public class CylinderCoat implements Shape {
         if(!isTNotObstructed(ray, t1) && !(b*b < 4*a*c)) {
             Point x = ray.pointAt(t1);
             Direction normal = Vector.divide(Vector.subtract(x, center), radius);
-            double inclination = Math.acos(ray.getDirection().y);
-            double azimuth = Math.PI + Math.atan2(ray.getDirection().x, ray.getDirection().z);
+            double inclination = Math.acos(normal.y);
+            double azimuth = Math.PI + Math.atan2(normal.x, normal.z);
             double u = azimuth / (2*Math.PI);
             double v = inclination / Math.PI;
             return new Hit(t1, x, normal, u, v, material);
@@ -50,8 +50,8 @@ public class CylinderCoat implements Shape {
         if(!isTNotObstructed(ray, t0) && !(b*b < 4*a*c)) {
             Point x = ray.pointAt(t0);
             Direction normal = Vector.divide(Vector.subtract(x, center), radius);
-            double inclination = Math.acos(ray.getDirection().y);
-            double azimuth = Math.PI + Math.atan2(ray.getDirection().x, ray.getDirection().z);
+            double inclination = Math.acos(normal.y);
+            double azimuth = Math.PI + Math.atan2(normal.x, normal.z);
             double u = azimuth / (2*Math.PI);
             double v = inclination / Math.PI;
             return new Hit(t0, x, normal, u, v, material);

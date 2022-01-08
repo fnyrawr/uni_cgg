@@ -30,12 +30,12 @@ public class Texture implements Sampler {
     }
 
     public Color getColor(double u, double v) {
-        if(u > width) u = u - width;
-        if(v > height) v = v - height;
         Point p = Matrix.multiply(transformation, Vector.point(u, v, 0));
-        double r = Math.pow(texture.getColor(p.x, p.y).r, 2.2);
-        double g = Math.pow(texture.getColor(p.x, p.y).g, 2.2);
-        double b = Math.pow(texture.getColor(p.x, p.y).b, 2.2);
+        u = p.x - Math.floor(p.x);
+        v = p.y - Math.floor(p.y);
+        double r = Math.pow(texture.getColor(u, v).r, 2.2);
+        double g = Math.pow(texture.getColor(u, v).g, 2.2);
+        double b = Math.pow(texture.getColor(u, v).b, 2.2);
         return new Color(r, g, b);
     }
 

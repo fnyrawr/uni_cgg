@@ -57,6 +57,7 @@ public class Plane implements Shape {
         if(dn == 0 || !ray.contains(t) || Vector.length(Vector.subtract(x, point)) > radius) return null;
 
         Point p = ray.pointAt(t);
+        // return new Hit(t, x, normal, p.x/radius+0.5, p.z/radius+0.5, material);
         return new Hit(t, x, normal, p.x/(2*radius)+0.5, p.z/(2*radius)+0.5, material);
     }
 

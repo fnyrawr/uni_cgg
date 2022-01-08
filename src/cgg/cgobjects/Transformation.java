@@ -39,12 +39,11 @@ public class Transformation {
     }
 
     public Hit hitObjectToWorld(Hit hit) {
+        if(hit == null) return null;
         Point p = Matrix.multiply(toWorld(), hit.getHitpoint());
         Direction n = Matrix.multiply(toWorldN(), hit.getNormal());
-        double inclination = Math.acos(n.y);
-        double azimuth = Math.PI + Math.atan2(n.x, n.z);
-        double u = azimuth / (2 * Math.PI);
-        double v = inclination / Math.PI;
+        double u = hit.u;
+        double v = hit.v;
         return new Hit(hit.getDistance(), p, n, u, v, hit.getMaterial());
     }
 }
