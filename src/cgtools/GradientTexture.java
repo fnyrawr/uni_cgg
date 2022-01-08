@@ -1,5 +1,12 @@
 package cgtools;
 
+/**
+ * @author Florian Kate
+ * Date 2022-01-08
+ * Student ID: 923081
+ * E-Mail: s51541@bht-berlin.de
+ */
+
 public class GradientTexture implements Sampler {
     private Color color1;
     private Color color2;
