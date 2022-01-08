@@ -49,13 +49,21 @@ public class Sphere implements Shape {
                 Point x = ray.pointAt(t1);
                 // normal vector = (x-center)/radius
                 Direction normal = Vector.divide(Vector.subtract(x, center), radius);
-                return new Hit(t1, x, normal, material);
+                double inclination = Math.acos(ray.getDirection().y);
+                double azimuth = Math.PI + Math.atan2(ray.getDirection().x, ray.getDirection().z);
+                double u = azimuth / (2*Math.PI);
+                double v = inclination / Math.PI;
+                return new Hit(t1, x, normal, u, v, material);
             }
             if(ray.contains(t0)) {
                 Point x = ray.pointAt(t0);
                 // normal vector = (x-center)/radius
                 Direction normal = Vector.divide(Vector.subtract(x, center), radius);
-                return new Hit(t0, x, normal, material);
+                double inclination = Math.acos(ray.getDirection().y);
+                double azimuth = Math.PI + Math.atan2(ray.getDirection().x, ray.getDirection().z);
+                double u = azimuth / (2*Math.PI);
+                double v = inclination / Math.PI;
+                return new Hit(t0, x, normal, u, v, material);
             }
         }
         return null;

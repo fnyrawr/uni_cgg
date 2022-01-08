@@ -19,23 +19,26 @@ import java.util.Collections;
     secondaryRay: ray gets mirrored on hitpoint with slight diffusion
  */
 public class DiffuseMirroringMaterial implements Material {
-    protected Color emmission;
-    protected Color albedo;
+    protected Sampler albedo;
     protected double scatteringFactor;
 
     public DiffuseMirroringMaterial(Color color, Double scatteringFactor) {
-        this.emmission = Color.black;
-        this.albedo = color;
+        this.albedo = new ConstantColor(color);
         this.scatteringFactor = scatteringFactor;
     }
 
-    public Color getEmmission() {
-        // no emmission
-        return emmission;
+    public DiffuseMirroringMaterial(Sampler texture, Double scatteringFactor) {
+        this.albedo = texture;
+        this.scatteringFactor = scatteringFactor;
     }
 
-    public Color getAlbedo() {
-        return albedo;
+    public Color getEmmission(Hit hit) {
+        // no emmission
+        return Color.black;
+    }
+
+    public Color getAlbedo(Hit hit) {
+        return albedo.getColor(hit.u, hit.v);
     }
 
     public Ray getSecondaryRay(Ray ray, Hit hit) {

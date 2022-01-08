@@ -12,7 +12,7 @@ import cgg.cgobjects.*;
 public interface Material {
     // Material describes diffusion and color intensity
 
-    public Color getEmmission();
-    public Color getAlbedo();
+    public Color getEmmission(Hit hit);
+    public Color getAlbedo(Hit hit);
     public Ray getSecondaryRay(Ray ray, Hit hit);
 }

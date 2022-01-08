@@ -16,21 +16,23 @@ import cgtools.*;
     secondaryRay: ray gets mirrored on hitpoint
  */
 public class MirroringMaterial implements Material {
-    protected Color emmission;
-    protected Color albedo;
+    protected Sampler albedo;
 
     public MirroringMaterial(Color color) {
-        this.emmission = Color.black;
-        this.albedo = color;
+        this.albedo = new ConstantColor(color);
     }
 
-    public Color getEmmission() {
+    public MirroringMaterial(Sampler texture) {
+        this.albedo = texture;
+    }
+
+    public Color getEmmission(Hit hit) {
         // no emmission
-        return emmission;
+        return Color.black;
     }
 
-    public Color getAlbedo() {
-        return albedo;
+    public Color getAlbedo(Hit hit) {
+        return albedo.getColor(hit.u, hit.v);
     }
 
     public Ray getSecondaryRay(Ray ray, Hit hit) {

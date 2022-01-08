@@ -3,6 +3,6 @@ package cgtools;
 
 // A Sampler is something that can return a color value for a two dimensional position.
 public interface Sampler {
-  public Color getColor(double x, double y);
+  public Color getColor(double u, double v);
   public int getRecursionDepth();
 }

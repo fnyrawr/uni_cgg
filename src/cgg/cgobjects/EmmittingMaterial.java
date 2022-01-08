@@ -16,22 +16,24 @@ import cgtools.*;
     secondaryRay: no diffusion
  */
 public class EmmittingMaterial implements Material {
-    protected Color emmission;
-    protected Color albedo;
+    protected Sampler emmission;
 
     public EmmittingMaterial(Color color) {
-        this.emmission = color;
-        this.albedo = null;
+        this.emmission = new ConstantColor(color);
     }
 
-    public Color getEmmission() {
+    public EmmittingMaterial(Sampler texture) {
+        this.emmission = texture;
+    }
+
+    public Color getEmmission(Hit hit) {
         // color of sky in ray direction, constant for now
-        return emmission;
+        return emmission.getColor(hit.u, hit.v);
     }
 
-    public Color getAlbedo() {
+    public Color getAlbedo(Hit hit) {
         // no diffusion, no albedo
-        return albedo;
+        return null;
     }
 
     public Ray getSecondaryRay(Ray ray, Hit hit) {

@@ -19,23 +19,26 @@ import java.util.Collections;
     secondaryRay: x0: hitpoint, direction: random with cosinus distribution
  */
 public class MistMaterial implements Material {
-    protected Color emmission;
-    protected Color albedo;
+    protected Sampler albedo;
     protected double depth;
 
     public MistMaterial(Color color, double depth) {
-        this.emmission = Color.black;
-        this.albedo = color;
+        this.albedo = new ConstantColor(color);
         this.depth = depth;
     }
 
-    public Color getEmmission() {
-        // no emmission
-        return emmission;
+    public MistMaterial(Sampler texture, double depth) {
+        this.albedo = texture;
+        this.depth = depth;
     }
 
-    public Color getAlbedo() {
-        return albedo;
+    public Color getEmmission(Hit hit) {
+        // no emmission
+        return Color.black;
+    }
+
+    public Color getAlbedo(Hit hit) {
+        return albedo.getColor(hit.u, hit.v);
     }
 
     public Ray getSecondaryRay(Ray ray, Hit hit) {

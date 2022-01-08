@@ -16,25 +16,28 @@ import cgtools.*;
     secondaryRay: complex mirroring calculation
  */
 public class WaterMaterial implements Material {
-    protected Color emmission;
-    protected Color albedo;
+    protected Sampler albedo;
     protected double murkness;
     private double n1 = 1.0;
     private double n2 = 1.3;
 
     public WaterMaterial(Color color, double murkness) {
-        this.emmission = Color.black;
-        this.albedo = color;
+        this.albedo = new ConstantColor(color);
         this.murkness = murkness;
     }
 
-    public Color getEmmission() {
-        // no emmission
-        return emmission;
+    public WaterMaterial(Sampler texture, double murkness) {
+        this.albedo = texture;
+        this.murkness = murkness;
     }
 
-    public Color getAlbedo() {
-        return albedo;
+    public Color getEmmission(Hit hit) {
+        // no emmission
+        return Color.black;
+    }
+
+    public Color getAlbedo(Hit hit) {
+        return albedo.getColor(hit.u, hit.v);
     }
 
     public Ray getSecondaryRay(Ray ray, Hit hit) {

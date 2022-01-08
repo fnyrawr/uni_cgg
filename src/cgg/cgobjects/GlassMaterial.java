@@ -16,23 +16,25 @@ import cgtools.*;
     secondaryRay: complex mirroring calculation
  */
 public class GlassMaterial implements Material {
-    protected Color emmission;
-    protected Color albedo;
+    protected Sampler albedo;
     private double n1 = 1.0;
     private double n2 = 1.5;
 
     public GlassMaterial(Color color) {
-        this.emmission = Color.black;
-        this.albedo = color;
+        this.albedo = new ConstantColor(color);
     }
 
-    public Color getEmmission() {
+    public GlassMaterial(Sampler texture) {
+        this.albedo = texture;
+    }
+
+    public Color getEmmission(Hit hit) {
         // no emmission
-        return emmission;
+        return Color.black;
     }
 
-    public Color getAlbedo() {
-        return albedo;
+    public Color getAlbedo(Hit hit) {
+        return albedo.getColor(hit.u, hit.v);
     }
 
     public Ray getSecondaryRay(Ray ray, Hit hit) {

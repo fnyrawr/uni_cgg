@@ -33,7 +33,7 @@ public class PlaneWinnerRadius implements Shape {
                 Vector.add(Vector.direction(outerRadius, 0.001, outerRadius), point));
     }
 
-    public Hit intersect(Ray r) {
+    public Hit intersect(Ray ray) {
         /*
             case 1: ray hits plane inside radius
                 ray.direction * plane.normal != 0 && Distance(Hit-point <= radius)
@@ -47,18 +47,19 @@ public class PlaneWinnerRadius implements Shape {
          */
 
         // dn = ray.direction * normal
-        double dn = Vector.dotProduct(r.getDirection(), normal);
+        double dn = Vector.dotProduct(ray.getDirection(), normal);
 
         // get hit distance: t = t = ( (plane.point-ray.x0)*plane.normal ) / ( ray.direction*plane.normal )
-        double t = Vector.dotProduct(Vector.subtract(point, r.getOrigin()), normal) / dn;
+        double t = Vector.dotProduct(Vector.subtract(point, ray.getOrigin()), normal) / dn;
 
         // hitpoint with plane
-        Point x = r.pointAt(t);
+        Point x = ray.pointAt(t);
 
         // return null if any of the above stated cases occur
-        if(dn == 0 || !r.contains(t) || Vector.length(Vector.subtract(x, point)) > outerRadius || Vector.length(Vector.subtract(x, point)) < innerRadius) return null;
+        if(dn == 0 || !ray.contains(t) || Vector.length(Vector.subtract(x, point)) > outerRadius || Vector.length(Vector.subtract(x, point)) < innerRadius) return null;
 
-        return new Hit(t, x, normal, material);
+        Point p = ray.pointAt(t);
+        return new Hit(t, x, normal, p.x/(2*outerRadius)+0.5, p.z/(2*outerRadius)+0.5, material);
     }
 
     public BoundingBox bounds() {

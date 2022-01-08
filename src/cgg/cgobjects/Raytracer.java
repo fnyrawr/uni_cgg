@@ -35,11 +35,11 @@ public class Raytracer implements Sampler {
         Ray secondaryRay = material.getSecondaryRay(ray, hit);
         if(secondaryRay != null) {
             // combine emmission and reflection
-            Color color = Color.multiply(material.getAlbedo(), calculateRadiance(scene, secondaryRay, depth-1));
-            return Color.add(material.getEmmission(), color);
+            Color color = Color.multiply(material.getAlbedo(hit), calculateRadiance(scene, secondaryRay, depth-1));
+            return Color.add(material.getEmmission(hit), color);
         }
         // absorbed, just emmission
-        return material.getEmmission();
+        return material.getEmmission(hit);
     }
 
     public int getRecursionDepth() {
