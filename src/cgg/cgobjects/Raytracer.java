@@ -9,15 +9,28 @@ package cgg.cgobjects;
 
 import cgtools.*;
 
+import java.util.ArrayList;
+
 public class Raytracer implements Sampler {
     public final CameraObscura camera;
     public final Group group;
+    public final World world;
     public final int recursionDepth;
 
     public Raytracer(CameraObscura camera, Group group, int recursionDepth) {
         this.camera = camera;
         this.group = group;
         this.recursionDepth = recursionDepth;
+        this.world = new World(null, group);
+        group.calculateBounds();    // calculate bounding boxes bounds as raytracer gets created
+    }
+
+    public Raytracer(CameraObscura camera, World world, int recursionDepth) {
+        this.camera = camera;
+        this.world = world;
+        this.group = world.scene;
+        this.recursionDepth = recursionDepth;
+        group.calculateBounds();    // calculate bounding boxes bounds as raytracer gets created
     }
 
     public Color getColor(double x, double y) {
@@ -36,7 +49,15 @@ public class Raytracer implements Sampler {
         if(secondaryRay != null) {
             // combine emmission and reflection
             Color color = Color.multiply(material.getAlbedo(hit), calculateRadiance(scene, secondaryRay, depth-1));
-            return Color.add(material.getEmmission(hit), color);
+            color = Color.add(material.getEmmission(hit), color);
+            // get light radiance if lights exist in the world
+            if(world.lights != null)
+            {
+                for(Light light: world.lights) {
+                    color = Color.add(color, light.incomingIntensity(hit.getHitpoint(), hit.getNormal(), scene));
+                }
+            }
+            return color;
         }
         // absorbed, just emmission
         return material.getEmmission(hit);
