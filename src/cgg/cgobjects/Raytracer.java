@@ -9,8 +9,6 @@ package cgg.cgobjects;
 
 import cgtools.*;
 
-import java.util.ArrayList;
-
 public class Raytracer implements Sampler {
     public final CameraObscura camera;
     public final Group group;
@@ -47,16 +45,22 @@ public class Raytracer implements Sampler {
         Material material = hit.getMaterial();
         Ray secondaryRay = material.getSecondaryRay(ray, hit);
         if(secondaryRay != null) {
+            // get light radiance if lights exist in the world
+            Color lightIntensity = null;
+            if(world.lights != null) {
+                // local variable for light, light intensity should include all world lights
+                lightIntensity = Color.black;
+                for(Light light: world.lights) {
+                    Color sourceIntensity = light.incomingIntensity(hit.getHitpoint(), hit.getNormal(), scene);
+                    sourceIntensity = Color.multiply(sourceIntensity, material.getAlbedo(hit));
+                    lightIntensity = Color.add(lightIntensity, sourceIntensity);
+                }
+            }
             // combine emmission and reflection
             Color color = Color.multiply(material.getAlbedo(hit), calculateRadiance(scene, secondaryRay, depth-1));
             color = Color.add(material.getEmmission(hit), color);
-            // get light radiance if lights exist in the world
-            if(world.lights != null)
-            {
-                for(Light light: world.lights) {
-                    color = Color.add(color, light.incomingIntensity(hit.getHitpoint(), hit.getNormal(), scene));
-                }
-            }
+            if(lightIntensity != null)
+                color = Color.add(color, lightIntensity);
             return color;
         }
         // absorbed, just emmission

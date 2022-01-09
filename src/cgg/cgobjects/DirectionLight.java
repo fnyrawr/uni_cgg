@@ -22,18 +22,13 @@ public class DirectionLight implements Light {
     }
 
     public Color incomingIntensity(Point hit, Direction normal, Shape scene) {
-        // Phong Model:
-        // p: hit | s: lightDirection | r: reflection of lightDirection | v: direction of view
-        // ambiance: La = ambiance coefficient x Light intensity
-        // diffusion: Ld = diffusion coefficient x Light intensity (normal * light direction)
-        // specular: Ls = specular coefficient x Light intensity (reflection * direction of view)^exponent
         Ray lightRay = new Ray(hit, Vector.negate(lightDirection), 0.0001, Double.POSITIVE_INFINITY);
         Hit collision = scene.intersect(lightRay);
         // comparison here because ray could actually collide with the background
         if(collision != null && collision.getDistance() < Double.POSITIVE_INFINITY) return Color.black;
 
-        Color ambient = Color.multiply(0.1, lightColor);
-        Color diffuse = Color.multiply(0.9 * Math.max(0.0, Vector.dotProduct(Vector.negate(lightDirection), normal)), lightColor);
+        Color ambient = Color.multiply(0.1 * intensity, lightColor);
+        Color diffuse = Color.multiply(0.9 * intensity * Math.max(0.0, Vector.dotProduct(Vector.negate(lightDirection), normal)), lightColor);
         return Color.add(ambient, diffuse);
     }
 }
