@@ -11,6 +11,8 @@ package cgg;
 
 import cgtools.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
@@ -76,8 +78,10 @@ public class Image {
         // collect calculated results
         int z = 0;
         double pixelsTotal = width*height;
-        System.out.println(String.format("Rendering %d x %d image with recursionDepth %d and %dx antialiasing settings using %d threads",
-                width, height, s.getRecursionDepth(), n, threads));
+        LocalDateTime curTime = LocalDateTime.now();
+        String dateTime = curTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+        System.out.println(String.format("(%s) rendering %d x %d image with recursionDepth %d and %dx antialiasing settings using %d threads",
+                dateTime, width, height, s.getRecursionDepth(), n, threads));
         for (int x = 0; x != width; x++) {
             for (int y = 0; y != height; y++) {
                 try {
@@ -92,9 +96,12 @@ public class Image {
                     int expSec = (int) expectedTime % 60;
                     int remMin = (int) remainingTime/60;
                     int remSec = (int) remainingTime % 60;
-                    if(runSec % 60 == 0)
-                        System.out.print(String.format("\r%.2f%% done | %d:%02d running | %d:%02d remaining | %d:%02d expected",
-                            percentage, runMin, runSec, remMin, remSec, expMin, expSec));
+                    if(runSec % 60 == 0) {
+                        curTime = LocalDateTime.now();
+                        dateTime = curTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+                        System.out.print(String.format("\r(%s) %.2f%% done | %d:%02d running | %d:%02d remaining | %d:%02d expected",
+                                dateTime, percentage, runMin, runSec, remMin, remSec, expMin, expSec));
+                    }
 
                     setPixel(x, y, pixels.get(z).get());
                     z++;
@@ -108,7 +115,9 @@ public class Image {
         long totalTime = (endTime-startTime)/1000000000;
         int runMin = (int) totalTime/60;
         int runSec = (int) totalTime % 60;
-        System.out.print(String.format("\rrendering with %d threads completed in %d:%02d (%d Seconds) \n\n", threads, runMin, runSec, totalTime));
+        curTime = LocalDateTime.now();
+        dateTime = curTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+        System.out.print(String.format("\r(%s) rendering completed in %d:%02d (%d Seconds) \n\n", dateTime, runMin, runSec, totalTime));
         pool.shutdown();
     }
 

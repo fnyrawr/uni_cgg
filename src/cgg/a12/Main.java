@@ -11,6 +11,8 @@ import cgg.Image;
 import cgg.cgobjects.*;
 import cgtools.*;
 
+import static cgtools.Vector.color;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -155,13 +157,16 @@ public class Main {
         group.addShape(createCat(Vector.point(-0.9, -0.425, -1.35)));
         group.addShape(createCat(Vector.point(0.9, -0.425, -1.35)));
 
+        // easteregg
+        group.addShape(createDragonballs(Vector.point(0.7, -0.425, -1.0)));
+
         // create world with scene and lights
         World world = new World(group);
         world.addLight(new PointLight(Vector.point(5.0, 9.0, -9.0), Color.lightgray, 15.0));
         image.sample(new Raytracer(camera, world, 32), 64);
 
         // Write the images to disk
-        final String filename = "doc/cgg-competition-ws-21-923081.png";
+        final String filename = "doc/a12.png";
         image.write(filename);
         System.out.println("Wrote image: " + filename);
     }
@@ -171,8 +176,8 @@ public class Main {
         String toriiTexture = "textures/concreteTexture.jpg";
         Matrix scaling = Matrix.scaling(5, 5, 5);
         // vertical beams
-        torii.addShape(new Cylinder(Vector.point(point.x-0.4, point.y, point.z), 0.045, 0.75, new DiffuseMaterial(new Texture(toriiTexture, scaling))));
-        torii.addShape(new Cylinder(Vector.point(point.x+0.4, point.y, point.z), 0.045, 0.75, new DiffuseMaterial(new Texture(toriiTexture, scaling))));
+        torii.addShape(new Cylinder(Vector.point(point.x-0.4, point.y, point.z), 0.045, 0.725, new DiffuseMaterial(new Texture(toriiTexture, scaling))));
+        torii.addShape(new Cylinder(Vector.point(point.x+0.4, point.y, point.z), 0.045, 0.725, new DiffuseMaterial(new Texture(toriiTexture, scaling))));
         // horizontal beams
         Group horizontalBeams = new Group(Matrix.rotation(Vector.direction(0, 0, 1), 90));
         horizontalBeams.addShape(new Cylinder(Vector.point(point.x-0.225, point.y-0.1, point.z), 0.05, 1.2, new DiffuseMaterial(new Texture(toriiTexture, scaling))));
@@ -213,5 +218,51 @@ public class Main {
         cat.addShape(new Sphere(Vector.point(point.x+0.0325, point.y+0.1425, point.z+0.01), 0.015, new DiffuseMaterial(new Texture(concrete))));
         cat.addShape(new Sphere(Vector.point(point.x+0.0325, point.y+0.143, point.z+0.0116), 0.0135, new DiffuseMaterial(Color.black)));
         return cat;
+    }
+
+    public static Group createDragonballs(Point point) {
+        Group dragonballs = new Group();
+        // chest
+        double chestWidth = 0.15;
+        double chestDepth = 0.15;
+        double chestHeight = 0.0425;
+        double chestBoardHeight = 0.001;
+        double ballSize = 0.025;
+        double innerBallSize = 0.0025;
+        Material chestMaterial = new DiffuseMirroringMaterial(color(0.05, 0.05, 0.05), 0.5);
+        Material dragonballMaterial = new GlassMaterial(Color.orange);
+        Material innerBallMaterial = new EmmittingMaterial(Color.orange);
+        // bottom
+        dragonballs.addShape(new Rectangle(Vector.point(point.x, point.y+chestBoardHeight/2, point.z),
+                chestWidth, chestBoardHeight, chestDepth, chestMaterial));
+        // left
+        dragonballs.addShape(new Rectangle(Vector.point(point.x-chestWidth/2+chestBoardHeight/2, point.y+chestBoardHeight/2+chestHeight/2, point.z),
+                chestBoardHeight, chestHeight, chestDepth, chestMaterial));
+        // right
+        dragonballs.addShape(new Rectangle(Vector.point(point.x+chestWidth/2-chestBoardHeight/2, point.y+chestBoardHeight/2+chestHeight/2, point.z),
+                chestBoardHeight, chestHeight, chestDepth, chestMaterial));
+        // back
+        dragonballs.addShape(new Rectangle(Vector.point(point.x, point.y+chestBoardHeight/2+chestHeight/2, point.z-chestDepth/2+chestBoardHeight/2),
+                chestWidth, chestHeight, chestBoardHeight, chestMaterial));
+        // front
+        dragonballs.addShape(new Rectangle(Vector.point(point.x, point.y+chestBoardHeight/2+chestHeight/2, point.z+chestDepth/2-chestBoardHeight/2),
+                chestWidth, chestHeight, chestBoardHeight, chestMaterial));
+
+        // balls
+        dragonballs.addShape(new Sphere(Vector.point(point.x, point.y+ballSize/2+chestBoardHeight, point.z), ballSize, dragonballMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x, point.y+ballSize/2+chestBoardHeight, point.z), innerBallSize, innerBallMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x-ballSize, point.y+ballSize/2+chestBoardHeight, point.z-ballSize), ballSize, dragonballMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x-ballSize, point.y+ballSize/2+chestBoardHeight, point.z-ballSize), innerBallSize, innerBallMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x+ballSize, point.y+ballSize/2+chestBoardHeight, point.z-ballSize), ballSize, dragonballMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x+ballSize, point.y+ballSize/2+chestBoardHeight, point.z-ballSize), innerBallSize, innerBallMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x-ballSize, point.y+ballSize/2+chestBoardHeight, point.z+ballSize), ballSize, dragonballMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x-ballSize, point.y+ballSize/2+chestBoardHeight, point.z+ballSize), innerBallSize, innerBallMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x+ballSize, point.y+ballSize/2+chestBoardHeight, point.z+ballSize), ballSize, dragonballMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x+ballSize, point.y+ballSize/2+chestBoardHeight, point.z+ballSize), innerBallSize, innerBallMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x+2*ballSize, point.y+ballSize/2+chestBoardHeight, point.z), ballSize, dragonballMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x+2*ballSize, point.y+ballSize/2+chestBoardHeight, point.z), innerBallSize, innerBallMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x-2*ballSize, point.y+ballSize/2+chestBoardHeight, point.z), ballSize, dragonballMaterial));
+        dragonballs.addShape(new Sphere(Vector.point(point.x-2*ballSize, point.y+ballSize/2+chestBoardHeight, point.z), innerBallSize, innerBallMaterial));
+        return dragonballs;
     }
 }
